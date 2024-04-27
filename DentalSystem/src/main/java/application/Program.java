@@ -7,9 +7,7 @@ package application;
 import db.DB;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 public class Program {
     
@@ -21,30 +19,19 @@ public class Program {
             conn = DB.getConnection();
             
             st = conn.prepareStatement(
-                    "INSERT INTO usuario"
-                    + "(nome, cargo, login, senha, email)"
-                    + "VALUES "
-                    + "(?, ?, ?, ?, ?)",
-                    Statement.RETURN_GENERATED_KEYS);
+                    "UPDATE usuario "
+                    + "SET nome = ?, cargo = ?, email = ? "
+                    + "WHERE "
+                    + "(id_usuario = ?)");
             
-            st.setString(1, "Yuri");
-            st.setString(2, "Administrador");
-            st.setString(3, "yuripaixao");
-            st.setString(4, "12345678");
-            st.setString(5, "yuripaixao@gmail.com");
+            st.setString(1, "Gordom Freedom");
+            st.setString(2, "Testador");
+            st.setString(3, "gordomfreedom@gmail.com");
+            st.setInt(4, 4);
             
-            int rowsAffected = st.executeUpdate();
+            int linhasAfetadas = st.executeUpdate();
             
-            if (rowsAffected > 0) {
-                ResultSet rs = st.getGeneratedKeys();
-                while (rs.next()) {
-                    int id = rs.getInt("1");
-                    System.out.println("Pronto! Id = " + id);
-                }
-            }
-            else {
-                System.out.println("Nenhuma linha foi alterada!");
-            }
+            System.out.println("Feito! Linhas afetadas: " + linhasAfetadas);
         }
         catch (SQLException e) {
             e.printStackTrace();
@@ -53,6 +40,7 @@ public class Program {
             DB.closeStatement(st);
             DB.closeConnection();
         }
+        
     }
     
 }
