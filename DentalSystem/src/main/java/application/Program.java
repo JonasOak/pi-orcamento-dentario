@@ -19,15 +19,11 @@ public class Program {
             conn = DB.getConnection();
             
             st = conn.prepareStatement(
-                    "UPDATE usuario "
-                    + "SET nome = ?, cargo = ?, email = ? "
+                    "DELETE FROM cliente "
                     + "WHERE "
-                    + "(id_usuario = ?)");
+                    + "id_cliente = ?");
             
-            st.setString(1, "Gordom Freedom");
-            st.setString(2, "Testador");
-            st.setString(3, "gordomfreedom@gmail.com");
-            st.setInt(4, 4);
+            st.setInt(1, 1);
             
             int linhasAfetadas = st.executeUpdate();
             
