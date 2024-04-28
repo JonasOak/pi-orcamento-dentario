@@ -10,8 +10,7 @@ public class Cliente {
     private String documento;
     private String email;
     
-    public Cliente() {
-        
+    public Cliente() {  
     }
 
     public Cliente(int idCliente, String nomeCliente, String endereco, String uf, String telefone, String documento, String email) {
@@ -112,10 +111,5 @@ public class Cliente {
                + ", telefone=" + telefone
                + ", documento=" + documento 
                + ", email=" + email + '}';
-    }
-    
-    
-    
-    
-    
+    } 
 }
