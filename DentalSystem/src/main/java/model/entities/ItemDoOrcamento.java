@@ -90,8 +90,5 @@ public class ItemDoOrcamento {
                + ", dente=" + dente 
                + ", servico=" + servico 
                + ", valor=" + valor + '}';
-    }
-    
-    
-    
+    } 
 }
