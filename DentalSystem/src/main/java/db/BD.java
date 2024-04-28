@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package db;
 
 import java.io.FileInputStream;
@@ -13,7 +9,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
 
-public class DB {
+public class BD {
     
     private static Connection conn = null;
     
@@ -25,7 +21,7 @@ public class DB {
             return props;
         }
         catch (IOException e) {
-            throw new DbException((e.getMessage()));
+            throw new ExcecaoBd((e.getMessage()));
         }
     }
     
@@ -37,7 +33,7 @@ public class DB {
                 conn = DriverManager.getConnection(url, props);
             }
             catch (SQLException e) {
-                throw new DbException((e.getMessage()));
+                throw new ExcecaoBd((e.getMessage()));
             }
         }
         return conn;
@@ -49,7 +45,7 @@ public class DB {
                 conn.close();
             }
             catch (SQLException e) {
-                throw new DbException(e.getMessage());
+                throw new ExcecaoBd(e.getMessage());
             }
         }
     }
@@ -60,7 +56,7 @@ public class DB {
             try {
                 st.close();
             } catch (SQLException e) {
-                throw new DbException(e.getMessage());
+                throw new ExcecaoBd(e.getMessage());
             }
         }
     }
@@ -71,7 +67,7 @@ public class DB {
             try {
                 rs.close();
             } catch (SQLException e) {
-                throw new DbException(e.getMessage());
+                throw new ExcecaoBd(e.getMessage());
             }
         }
     }

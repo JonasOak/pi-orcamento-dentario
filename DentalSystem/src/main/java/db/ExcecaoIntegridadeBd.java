@@ -4,11 +4,11 @@
  */
 package db;
 
-public class DbIntegrityException extends RuntimeException {
+public class ExcecaoIntegridadeBd extends RuntimeException {
     
     private static final long serialVersionUID = 1L;
     
-    public DbIntegrityException(String msg) {
+    public ExcecaoIntegridadeBd(String msg) {
         super(msg); // Exceção personalizada para conflitos de integridade do BD
     }
     
