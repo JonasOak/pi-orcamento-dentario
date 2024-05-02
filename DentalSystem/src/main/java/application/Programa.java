@@ -1,6 +1,7 @@
 package application;
 
 import model.controller.ClienteController;
+import model.dao.DaoFactory;
 import model.controller.ItemDoOrcamentoController;
 import model.controller.OrcamentoController;
 import model.controller.UsuarioController;
@@ -13,17 +14,12 @@ public class Programa {
     
     public static void main(String[] args) {
         
-        Usuario usuario = new Usuario();
-        UsuarioController usuarioController = new UsuarioController();
+        ClienteController clienteController = DaoFactory.criarClienteController();
         
-        Cliente cliente = new Cliente();
-        ClienteController clienteController = new ClienteController();
+        // Teste busca de cliente por id
+        Cliente cliente = clienteController.buscarPorId(2);
+        System.out.println(cliente);
         
-        Orcamento orcamento = new Orcamento();
-        OrcamentoController orcamentoController = new OrcamentoController();
-        
-        ItemDoOrcamento itemDoOrcamento = new ItemDoOrcamento();
-        ItemDoOrcamentoController itemDoOrcamentoController = new ItemDoOrcamentoController();
         
     }
 }
