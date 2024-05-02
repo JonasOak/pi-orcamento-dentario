@@ -64,7 +64,29 @@ public class ClienteController implements ClienteDao {
 
     @Override
     public void atualizar(Cliente cliente) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        PreparedStatement st = null;
+        try {
+            st = conn.prepareStatement(
+                    "UPDATE cliente "
+                    + "SET nome = ?, endereco = ?, uf = ?, telefone = ?, documento = ?, email = ? "
+                    + "WHERE id_cliente = ?");
+            
+            st.setString(1, cliente.getNomeCliente());
+            st.setString(2, cliente.getEndereco());
+            st.setString(3, cliente.getUf());
+            st.setString(4, cliente.getTelefone());
+            st.setString(5, cliente.getDocumento());
+            st.setString(6, cliente.getEmail());
+            st.setInt(7, cliente.getIdCliente());
+            
+            st.executeUpdate();
+        }
+        catch (SQLException e) {
+            throw new ExcecaoBd(e.getMessage());
+        }
+        finally {
+            BD.closeStatement(st);
+        }
     }
 
     @Override
