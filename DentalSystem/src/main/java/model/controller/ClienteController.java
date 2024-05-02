@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,7 +24,42 @@ public class ClienteController implements ClienteDao {
 
     @Override
     public void inserir(Cliente cliente) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        PreparedStatement st = null;
+        try {
+            st = conn.prepareStatement(
+                    "INSERT INTO cliente "
+                    + "(nome, endereco, uf, telefone, documento, email) "
+                    + "VALUES "
+                    + "(?, ?, ?, ?, ?, ?)",
+                    Statement.RETURN_GENERATED_KEYS);
+            
+            st.setString(1, cliente.getNomeCliente());
+            st.setString(2, cliente.getEndereco());
+            st.setString(3, cliente.getUf());
+            st.setString(4, cliente.getTelefone());
+            st.setString(5, cliente.getDocumento());
+            st.setString(6, cliente.getEmail());
+            
+            int linhasAfetadas = st.executeUpdate();
+            
+            if (linhasAfetadas > 0) {
+                ResultSet rs = st.getGeneratedKeys();
+                if (rs.next()) {
+                    int id = rs.getInt(1);
+                    cliente.setIdCliente(id);
+                }
+                BD.closeResultSet(rs);
+            }
+            else {
+                throw new ExcecaoBd("Erro inesperado! Nenhuma linha foi alterada!");
+            }
+        }
+        catch (SQLException e) {
+            throw new ExcecaoBd(e.getMessage());
+        }
+        finally {
+            BD.closeStatement(st);
+        }
     }
 
     @Override
@@ -43,20 +79,20 @@ public class ClienteController implements ClienteDao {
         try {
             st = conn.prepareStatement(
                     "SELECT cliente.* FROM cliente "
-                    + "ORDER BY cliente.nome");
+                    + "ORDER BY cliente.id_cliente");
             
             rs = st.executeQuery();
             
             List<Cliente> list = new ArrayList<>();
-            Map<String, Cliente> map = new HashMap<>();
+            Map<Integer, Cliente> map = new HashMap<>();
             
             while (rs.next()) {
                 // Não criar clientes repetidos
-                Cliente cliente = map.get(rs.getString("nome"));
+                Cliente cliente = map.get(rs.getInt("id_cliente"));
                 
                 if (cliente == null) {
                     cliente = instanciarCliente(rs);
-                    map.put(rs.getString("nome"), cliente);
+                    map.put(rs.getInt("id_cliente"), cliente);
                 }
                 
                 list.add(cliente);
