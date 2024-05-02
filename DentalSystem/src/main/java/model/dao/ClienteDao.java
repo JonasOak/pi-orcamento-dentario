@@ -5,10 +5,9 @@ import model.entities.Cliente;
 
 public interface ClienteDao {
     
-    void inserir(Cliente cliente);
-    void atualizar(Cliente cliente);
+    void inserir(Cliente c);
+    void atualizar(Cliente c);
     void deletarPorId(Integer id);
     List<Cliente> buscarTodos();
     Cliente buscarPorId(Integer id);
-    List<Cliente> buscarPorNome();
 }
