@@ -1,14 +1,9 @@
 package application;
 
+import java.util.List;
 import model.controller.ClienteController;
 import model.dao.DaoFactory;
-import model.controller.ItemDoOrcamentoController;
-import model.controller.OrcamentoController;
-import model.controller.UsuarioController;
 import model.entities.Cliente;
-import model.entities.ItemDoOrcamento;
-import model.entities.Orcamento;
-import model.entities.Usuario;
 
 public class Programa {
     
@@ -17,9 +12,14 @@ public class Programa {
         ClienteController clienteController = DaoFactory.criarClienteController();
         
         // Teste busca de cliente por id
-        Cliente cliente = clienteController.buscarPorId(2);
-        System.out.println(cliente);
+//        Cliente cliente1 = clienteController.buscarPorId(2);
+//        System.out.println(cliente1);
         
-        
+        // Teste buscar todos os clientes
+        List<Cliente> list = clienteController.buscarTodos();
+        for (Cliente c : list) {
+            System.out.println(c);
+        }
+
     }
 }
