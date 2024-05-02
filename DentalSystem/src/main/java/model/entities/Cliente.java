@@ -1,8 +1,12 @@
 package model.entities;
 
+import java.util.Objects;
+
 public class Cliente {
     
-    private int idCliente;
+    private static final long serialVersionUID = 1L;
+    
+    private Integer idCliente;
     private String nomeCliente;
     private String endereco;
     private String uf;
@@ -13,7 +17,7 @@ public class Cliente {
     public Cliente() {  
     }
 
-    public Cliente(int idCliente, String nomeCliente, String endereco, String uf, String telefone, String documento, String email) {
+    public Cliente(Integer idCliente, String nomeCliente, String endereco, String uf, String telefone, String documento, String email) {
         this.idCliente = idCliente;
         this.nomeCliente = nomeCliente;
         this.endereco = endereco;
@@ -27,7 +31,7 @@ public class Cliente {
         return idCliente;
     }
 
-    public void setIdCliente(int idCliente) {
+    public void setIdCliente(Integer idCliente) {
         this.idCliente = idCliente;
     }
 
@@ -81,8 +85,8 @@ public class Cliente {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 89 * hash + this.idCliente;
+        int hash = 5;
+        hash = 97 * hash + Objects.hashCode(this.idCliente);
         return hash;
     }
 
@@ -98,7 +102,7 @@ public class Cliente {
             return false;
         }
         final Cliente other = (Cliente) obj;
-        return this.idCliente == other.idCliente;
+        return Objects.equals(this.idCliente, other.idCliente);
     }
 
     @Override
