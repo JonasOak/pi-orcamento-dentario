@@ -91,7 +91,20 @@ public class ClienteController implements ClienteDao {
 
     @Override
     public void deletarPorId(Integer id) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        PreparedStatement st = null;
+        try {
+            st = conn.prepareStatement("DELETE FROM cliente WHERE id_cliente = ?");
+
+            st.setInt(1, id);
+
+            st.executeUpdate();
+        }
+        catch (SQLException e) {
+            throw new ExcecaoBd(e.getMessage());
+        }
+        finally {
+            BD.closeStatement(st);
+        }
     }
     
     @Override
