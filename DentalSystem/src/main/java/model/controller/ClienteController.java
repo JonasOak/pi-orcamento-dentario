@@ -6,7 +6,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import model.dao.ClienteDao;
 import model.entities.Cliente;
 
@@ -35,7 +38,38 @@ public class ClienteController implements ClienteDao {
     
     @Override
     public List<Cliente> buscarTodos() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        try {
+            st = conn.prepareStatement(
+                    "SELECT cliente.* FROM cliente "
+                    + "ORDER BY cliente.nome");
+            
+            rs = st.executeQuery();
+            
+            List<Cliente> list = new ArrayList<>();
+            Map<String, Cliente> map = new HashMap<>();
+            
+            while (rs.next()) {
+                // Não criar clientes repetidos
+                Cliente cliente = map.get(rs.getString("nome"));
+                
+                if (cliente == null) {
+                    cliente = instanciarCliente(rs);
+                    map.put(rs.getString("nome"), cliente);
+                }
+                
+                list.add(cliente);
+            }
+            return list;
+        }
+        catch (SQLException e) {
+            throw new ExcecaoBd(e.getMessage());
+        }
+        finally {
+            BD.closeStatement(st);
+            BD.closeResultSet(rs);
+        }
     }
     
     @Override
@@ -62,11 +96,6 @@ public class ClienteController implements ClienteDao {
             BD.closeStatement(st);
             BD.closeResultSet(rs);
         }
-    }
-
-    @Override
-    public List<Cliente> buscarPorNome() {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
     
     // Método para instanciar cliente e não deixar o código verboso
