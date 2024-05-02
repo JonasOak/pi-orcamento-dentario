@@ -47,6 +47,9 @@ public class Programa {
         cliente.setEmail("girafola@gmail.com");
         clienteController.atualizar(cliente);
         */
+        
+        // Teste deletar cliente
+        //clienteController.deletarPorId(3);
 
 
     }
