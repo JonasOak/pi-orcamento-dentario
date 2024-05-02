@@ -103,13 +103,13 @@ public class Cliente {
 
     @Override
     public String toString() {
-        return "Cliente"
-               + "{" + "idCliente=" + idCliente 
-               + ", nomeCliente=" + nomeCliente 
-               + ", endereco=" + endereco
-               + ", uf=" + uf
-               + ", telefone=" + telefone
-               + ", documento=" + documento 
-               + ", email=" + email + '}';
+        return 
+                 "\n" + idCliente 
+               + "\n" + nomeCliente 
+               + "\n" + endereco
+               + "\n" + uf
+               + "\n" + telefone
+               + "\n" + documento 
+               + "\n" + email;
     } 
 }
