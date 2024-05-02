@@ -40,6 +40,13 @@ public class Programa {
             System.out.println("Inserido! Novo id = " + c.getIdCliente());
         }
         */
+        
+        // Teste atualizar cliente
+        /*
+        Cliente cliente = clienteController.buscarPorId(3);
+        cliente.setEmail("girafola@gmail.com");
+        clienteController.atualizar(cliente);
+        */
 
 
     }
