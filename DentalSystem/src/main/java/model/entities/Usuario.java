@@ -1,8 +1,10 @@
 package model.entities;
 
+import java.util.Objects;
+
 public class Usuario {
     
-    private int idUsuario;
+    private Integer idUsuario;
     private String nome;
     private String cargo;
     private String login;
@@ -12,7 +14,7 @@ public class Usuario {
     public Usuario() {
     }
 
-    public Usuario(int idUsuario, String nome, String cargo, String login, String senha, String email) {
+    public Usuario(Integer idUsuario, String nome, String cargo, String login, String senha, String email) {
         this.idUsuario = idUsuario;
         this.nome = nome;
         this.cargo = cargo;
@@ -21,11 +23,11 @@ public class Usuario {
         this.email = email;
     }
 
-    public int getIdUsuario() {
+    public Integer getIdUsuario() {
         return idUsuario;
     }
 
-    public void setIdUsuario(int idUsuario) {
+    public void setIdUsuario(Integer idUsuario) {
         this.idUsuario = idUsuario;
     }
 
@@ -71,8 +73,8 @@ public class Usuario {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 53 * hash + this.idUsuario;
+        int hash = 5;
+        hash = 41 * hash + Objects.hashCode(this.idUsuario);
         return hash;
     }
 
@@ -88,17 +90,17 @@ public class Usuario {
             return false;
         }
         final Usuario other = (Usuario) obj;
-        return this.idUsuario == other.idUsuario;
+        return Objects.equals(this.idUsuario, other.idUsuario);
     }
 
     @Override
     public String toString() {
-        return "Usuario"
-               + "{" + "idUsuario=" + idUsuario 
-               + ", nome=" + nome 
-               + ", cargo=" + cargo 
-               + ", login=" + login 
-               + ", senha=" + senha 
-               + ", email=" + email + '}';
+        return
+               + idUsuario 
+               + "\n" + nome 
+               + "\n" + cargo 
+               + "\n" + login 
+               + "\n" + senha 
+               + "\n" + email;
     }   
 }
