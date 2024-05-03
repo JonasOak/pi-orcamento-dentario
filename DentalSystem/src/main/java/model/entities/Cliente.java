@@ -27,7 +27,7 @@ public class Cliente {
         this.email = email;
     }
 
-    public int getIdCliente() {
+    public Integer getIdCliente() {
         return idCliente;
     }
 
@@ -108,7 +108,7 @@ public class Cliente {
     @Override
     public String toString() {
         return 
-                 "\n" + idCliente 
+               + idCliente 
                + "\n" + nomeCliente 
                + "\n" + endereco
                + "\n" + uf
