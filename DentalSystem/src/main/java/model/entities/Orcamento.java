@@ -1,33 +1,35 @@
 package model.entities;
 
 import java.util.Date;
+import java.util.Objects;
 
 public class Orcamento {
     
-    private int idOrcamento;
+    private Integer idOrcamento;
     private Date dataRegistro;
     private String plano;
     private Date dataAgendamento;
-    private Cliente cliente;
     private String observacao;
+    
+    private Cliente cliente;
     
     public Orcamento() {
     }
 
-    public Orcamento(int idOrcamento, Date dataRegistro, String plano, Date dataAgendamento, Cliente cliente, String observacao) {
+    public Orcamento(Integer idOrcamento, Date dataRegistro, String plano, Date dataAgendamento, String observacao, Cliente cliente) {
         this.idOrcamento = idOrcamento;
         this.dataRegistro = dataRegistro;
         this.plano = plano;
         this.dataAgendamento = dataAgendamento;
-        this.cliente = cliente;
         this.observacao = observacao;
+        this.cliente = cliente;
     }
 
-    public int getIdOrcamento() {
+    public Integer getIdOrcamento() {
         return idOrcamento;
     }
 
-    public void setIdOrcamento(int idOrcamento) {
+    public void setIdOrcamento(Integer idOrcamento) {
         this.idOrcamento = idOrcamento;
     }
 
@@ -55,14 +57,6 @@ public class Orcamento {
         this.dataAgendamento = dataAgendamento;
     }
 
-    public Cliente getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
-
     public String getObservacao() {
         return observacao;
     }
@@ -71,10 +65,18 @@ public class Orcamento {
         this.observacao = observacao;
     }
 
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 47 * hash + this.idOrcamento;
+        hash = 59 * hash + Objects.hashCode(this.idOrcamento);
         return hash;
     }
 
@@ -90,17 +92,17 @@ public class Orcamento {
             return false;
         }
         final Orcamento other = (Orcamento) obj;
-        return this.idOrcamento == other.idOrcamento;
+        return Objects.equals(this.idOrcamento, other.idOrcamento);
     }
 
     @Override
     public String toString() {
-        return "Orcamento"
-               + "{" + "idOrcamento=" + idOrcamento 
-               + ", dataRegistro=" + dataRegistro 
-               + ", plano=" + plano 
-               + ", dataAgendamento=" + dataAgendamento 
-               + ", cliente=" + cliente 
-               + ", observacao=" + observacao + '}';
+        return 
+               + idOrcamento 
+               + "\n" + dataRegistro
+               + "\n" +  plano 
+               + "\n" + dataAgendamento 
+               + "\n" + cliente 
+               + "\n" + observacao;
     } 
 }
