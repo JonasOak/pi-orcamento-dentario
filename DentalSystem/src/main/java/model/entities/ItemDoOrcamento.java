@@ -1,39 +1,33 @@
 package model.entities;
 import java.math.BigDecimal;
+import java.util.Objects;
 
 public class ItemDoOrcamento {
     
-    private int idItemDoOrcamento;
-    private Orcamento orcamento;
+    private Integer idItemDoOrcamento;
     private String dente;
     private String servico;
     private BigDecimal valor;
     
+    private Orcamento orcamento;
+    
     public ItemDoOrcamento() {
     }
 
-    public ItemDoOrcamento(int idItemDoOrcamento, Orcamento orcamento, String dente, String servico, BigDecimal valor) {
+    public ItemDoOrcamento(Integer idItemDoOrcamento, String dente, String servico, BigDecimal valor, Orcamento orcamento) {
         this.idItemDoOrcamento = idItemDoOrcamento;
-        this.orcamento = orcamento;
         this.dente = dente;
         this.servico = servico;
         this.valor = valor;
+        this.orcamento = orcamento;
     }
 
-    public int getIdItemDoOrcamento() {
+    public Integer getIdItemDoOrcamento() {
         return idItemDoOrcamento;
     }
 
-    public void setIdItemDoOrcamento(int idItemDoOrcamento) {
+    public void setIdItemDoOrcamento(Integer idItemDoOrcamento) {
         this.idItemDoOrcamento = idItemDoOrcamento;
-    }
-
-    public Orcamento getOrcamento() {
-        return orcamento;
-    }
-
-    public void setOrcamento(Orcamento orcamento) {
-        this.orcamento = orcamento;
     }
 
     public String getDente() {
@@ -60,10 +54,18 @@ public class ItemDoOrcamento {
         this.valor = valor;
     }
 
+    public Orcamento getOrcamento() {
+        return orcamento;
+    }
+
+    public void setOrcamento(Orcamento orcamento) {
+        this.orcamento = orcamento;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 29 * hash + this.idItemDoOrcamento;
+        int hash = 5;
+        hash = 37 * hash + Objects.hashCode(this.idItemDoOrcamento);
         return hash;
     }
 
@@ -79,16 +81,16 @@ public class ItemDoOrcamento {
             return false;
         }
         final ItemDoOrcamento other = (ItemDoOrcamento) obj;
-        return this.idItemDoOrcamento == other.idItemDoOrcamento;
+        return Objects.equals(this.idItemDoOrcamento, other.idItemDoOrcamento);
     }
-
+    
     @Override
     public String toString() {
-        return "ItemDoOrcamento"
-               + "{" + "idItemDoOrcamento=" + idItemDoOrcamento
-               + ", orcamento=" + orcamento 
-               + ", dente=" + dente 
-               + ", servico=" + servico 
-               + ", valor=" + valor + '}';
+        return
+               + idItemDoOrcamento
+               + "\n" + orcamento 
+               + "\n" + dente 
+               + "\n" + servico 
+               + "\n" + valor;
     } 
 }
