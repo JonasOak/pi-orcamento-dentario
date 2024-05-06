@@ -105,8 +105,7 @@ public class Cliente {
         return Objects.equals(this.idCliente, other.idCliente);
     }
 
-    @Override
-    public String toString() {
+    public String toStringInstancia() {
         return 
                + idCliente 
                + "\n" + nomeCliente 
@@ -116,4 +115,15 @@ public class Cliente {
                + "\n" + documento 
                + "\n" + email;
     } 
+    
+    public String toStringBuscaDados() {
+        return 
+                + idCliente 
+                + "\n" + nomeCliente;
+    }
+    
+    public String toStringBuscaId() {
+        return idCliente != null ? idCliente.toString() : "ID Cliente não especificado"
+               + "\n";
+    }
 }
