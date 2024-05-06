@@ -97,12 +97,24 @@ public class Orcamento {
 
     @Override
     public String toString() {
+        String clienteString = cliente != null ? cliente.toStringBuscaId() : "Cliente não especificado";
         return 
-               + idOrcamento 
-               + "\n" + dataRegistro
-               + "\n" +  plano 
-               + "\n" + dataAgendamento 
-               + "\n" + cliente 
-               + "\n" + observacao;
-    } 
+               "ID Orçamento: " + idOrcamento + "\n"
+               + "Data Registro: " + dataRegistro + "\n"
+               + "Plano: " + plano + "\n" 
+               + "Data Agendamento: " + dataAgendamento + "\n" 
+               + "Observação: " + observacao + "\n"
+               + "ID Cliente: " + clienteString;
+    }
+    
+    public String toStringBuscaCliente() {
+        String clienteString = cliente != null ? cliente.toStringBuscaId() : "Cliente não especificado";
+        return 
+               "Nome Cliente: " + cliente.getNomeCliente() + "\n"
+               + "ID Orçamento: " + idOrcamento + "\n"
+               + "Data Registro: " + dataRegistro + "\n"
+               + "Plano: " + plano + "\n" 
+               + "Data Agendamento: " + dataAgendamento + "\n" 
+               + "Observação: " + observacao + "\n";
+    }
 }
