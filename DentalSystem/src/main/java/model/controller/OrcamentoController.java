@@ -107,29 +107,104 @@ public class OrcamentoController implements OrcamentoDao {
     }
 
     @Override
-    public List<Orcamento> buscarTodos() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public List<Orcamento> buscarPorId(Integer id) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    // Método para instanciar orçamento e não deixar o código verboso
-    private Orcamento instanciarOrcamento(ResultSet rs, Cliente cliente) throws SQLException {
-        Orcamento orcamento = new Orcamento();
-        orcamento.setIdOrcamento(rs.getInt("id_orcamento"));
-        orcamento.setDataRegistro(rs.getDate("data_registro"));
-        orcamento.setDataAgendamento(rs.getDate("data_agendamento"));
-        orcamento.setPlano(rs.getString("plano"));
-        orcamento.setCliente(cliente);
-        orcamento.setObservacao(rs.getString("documento"));
-        return orcamento;
+    public Orcamento buscarPorId(Integer id) {
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        try {
+            st = conn.prepareStatement(
+                    "SELECT c.nome, o.fk_id_cliente as id_cliente, "
+                    + "o.id_orcamento, o.data_registro, o.data_agendamento, o.plano, o.observacao "
+                    + "FROM orcamento o JOIN cliente c "
+                    + "ON o.fk_id_cliente = c.id_cliente "
+                    + "WHERE o.id_orcamento = ?");
+            
+            st.setInt(1, id);
+            rs = st.executeQuery();
+            if (rs.next()) {
+                Cliente c = new Cliente();
+                c.setIdCliente(rs.getInt("id_cliente"));
+                c.setNomeCliente(rs.getString("nome"));
+                
+                Orcamento o = instanciarOrcamento(rs, c);
+                return o;
+            }
+            return null;
+        }
+        catch (SQLException e) {
+            throw new ExcecaoBd((e.getMessage()));
+        }
+        finally {
+            BD.closeStatement(st);
+            BD.closeResultSet(rs);
+        }
     }
     
-    // Método para instanciar cliente e não deixar o código verboso
-    private Cliente instanciarCliente(ResultSet rs, Orcamento orcamento) throws SQLException {
+    @Override
+    public List<Orcamento> buscarTodos() {
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        try {
+            st = conn.prepareStatement(
+                    "SELECT orcamento.*, cliente.id_cliente FROM orcamento "
+                    + "JOIN cliente ON cliente.id_cliente = orcamento.fk_id_cliente "
+                    + "ORDER BY orcamento.id_orcamento");
+            
+            rs = st.executeQuery();
+            
+            List<Orcamento> list = new ArrayList<>();
+            while (rs.next()) {
+                Cliente c = new Cliente();
+                c.setIdCliente(rs.getInt("id_cliente"));
+                
+                Orcamento o = instanciarOrcamento(rs, c);
+                list.add(o);
+            }
+            return list;
+        }
+        catch (SQLException e) {
+            throw new ExcecaoBd((e.getMessage()));
+        }
+        finally {
+            BD.closeStatement(st);
+            BD.closeResultSet(rs);
+        }
+    }
+    
+    @Override
+    public List<Orcamento> buscarPorCliente(Cliente c) {
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        try {
+            st = conn.prepareStatement(
+                    "SELECT cliente.nome, orcamento.* FROM orcamento "
+                    + "JOIN cliente ON cliente.id_cliente = orcamento.fk_id_cliente "
+                    + "WHERE cliente.nome LIKE ? "
+                    + "ORDER BY cliente.nome");
+            
+            st.setString(1, "%" + c.getNomeCliente() + "%");
+            
+            rs = st.executeQuery();
+            List<Orcamento> list = new ArrayList<>();
+            
+            while (rs.next()) {
+                Cliente cliente = new Cliente();
+                cliente.setNomeCliente(rs.getString("nome"));
+                Orcamento orcamento = instanciarOrcamento(rs, cliente);
+                list.add(orcamento);
+            }
+            return list;
+        }
+        catch (SQLException e) {
+            throw new ExcecaoBd(e.getMessage());
+        }
+        finally {
+            BD.closeStatement(st);
+            BD.closeResultSet(rs);
+        }
+    }
+
+     // Método para instanciar cliente e não deixar o código verboso
+    private Cliente instanciarCliente(ResultSet rs) throws SQLException {
         Cliente cliente = new Cliente();
         cliente.setIdCliente(rs.getInt("id_cliente"));
         cliente.setNomeCliente(rs.getString("nome"));
@@ -141,4 +216,15 @@ public class OrcamentoController implements OrcamentoDao {
         return cliente;
     }
     
+    // Método para instanciar orçamento e não deixar o código verboso
+    private Orcamento instanciarOrcamento(ResultSet rs, Cliente c) throws SQLException {
+        Orcamento o = new Orcamento();
+        o.setIdOrcamento(rs.getInt("id_orcamento"));
+        o.setDataRegistro(rs.getDate("data_registro"));
+        o.setDataAgendamento(rs.getDate("data_agendamento"));
+        o.setPlano(rs.getString("plano"));
+        o.setCliente(c);
+        o.setObservacao(rs.getString("observacao"));
+        return o;
+    }
 }
