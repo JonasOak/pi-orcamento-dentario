@@ -90,17 +90,19 @@ public class ClienteController implements ClienteDao {
     }
 
     @Override
-    public void deletarPorId(Integer id) {
+    public void excluir(Cliente cliente) {
         PreparedStatement st = null;
+        if (cliente == null) {
+            throw new ExcecaoBd("O valor passado não pode ser nulo");
+        }
         try {
             st = conn.prepareStatement("DELETE FROM cliente WHERE id_cliente = ?");
 
-            st.setInt(1, id);
-
+            st.setInt(1, cliente.getIdCliente());
             st.executeUpdate();
         }
         catch (SQLException e) {
-            throw new ExcecaoBd(e.getMessage());
+            throw new ExcecaoBd("Erro ao excluir dados: " + e.getMessage());
         }
         finally {
             BD.closeStatement(st);
@@ -155,7 +157,14 @@ public class ClienteController implements ClienteDao {
             st.setInt(1, id);
             rs = st.executeQuery();
             if (rs.next()) {
-                Cliente cliente = instanciarCliente(rs);
+                Cliente cliente = new Cliente();
+                cliente.setIdCliente(rs.getInt("id_cliente"));
+                cliente.setNomeCliente(rs.getString("nome"));
+                cliente.setEndereco(rs.getString("endereco"));
+                cliente.setUf(rs.getString("uf"));
+                cliente.setTelefone(rs.getString("telefone"));
+                cliente.setDocumento(rs.getString("documento"));
+                cliente.setEmail(rs.getString("email"));
                 return cliente;
             }
             return null;

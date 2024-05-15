@@ -7,7 +7,7 @@ public interface ClienteDao {
     
     void inserir(Cliente c);
     void atualizar(Cliente c);
-    void deletarPorId(Integer id);
+    void excluir(Cliente c);
     List<Cliente> buscarTodos();
     Cliente buscarPorId(Integer id);
 }
