@@ -89,12 +89,12 @@ public class OrcamentoController implements OrcamentoDao {
     }
 
     @Override
-    public void deletarPorId(Integer id) {
+    public void deletarPorId(Orcamento orcamento) {
         PreparedStatement st = null;
         try {
             st = conn.prepareStatement("DELETE FROM orcamento WHERE id_orcamento = ?");
 
-            st.setInt(1, id);
+            st.setInt(1, orcamento.getIdOrcamento());
 
             st.executeUpdate();
         }
