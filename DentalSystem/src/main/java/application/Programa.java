@@ -3,6 +3,7 @@ package application;
 import java.util.Date;
 import java.util.List;
 import model.controller.ClienteController;
+import model.controller.ItemDoOrcamentoController;
 import model.controller.OrcamentoController;
 import model.dao.DaoFactory;
 import model.entities.Cliente;
@@ -14,6 +15,7 @@ public class Programa {
         
         ClienteController clienteController = DaoFactory.criarClienteController();
         OrcamentoController orcamentoController = DaoFactory.criarOrcamentoController();
+        ItemDoOrcamentoController itemDoOrcamentoController = DaoFactory.criarItemDoOrcamentoController();
         List<Cliente> listC;
         List<Orcamento> listO;
         //Cliente cliente1 = new Cliente(4, "Maria", "Rua dAS fLORES, 321", "SP", "(11) 987654321", "12.345.678-90", "maria@gmail.com");
