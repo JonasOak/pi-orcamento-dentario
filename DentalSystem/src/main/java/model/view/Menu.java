@@ -1,5 +1,9 @@
 package model.view;
 
+import java.awt.BorderLayout;
+import javax.swing.JDesktopPane;
+import model.entities.enums.Operacao;
+
 public class Menu extends javax.swing.JFrame {
 
     /**
@@ -7,6 +11,12 @@ public class Menu extends javax.swing.JFrame {
      */
     public Menu() {
         initComponents();
+        setSize(1200, 800);
+        setLocation(350, 50);
+    }
+
+    public JDesktopPane getDesktop() {
+        return desktop;
     }
 
     /**
@@ -31,17 +41,17 @@ public class Menu extends javax.swing.JFrame {
         setTitle("Menu");
         setPreferredSize(new java.awt.Dimension(1360, 768));
 
-        desktop.setPreferredSize(new java.awt.Dimension(1360, 768));
+        desktop.setPreferredSize(new java.awt.Dimension(1920, 1080));
 
         javax.swing.GroupLayout desktopLayout = new javax.swing.GroupLayout(desktop);
         desktop.setLayout(desktopLayout);
         desktopLayout.setHorizontalGroup(
             desktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1360, Short.MAX_VALUE)
+            .addGap(0, 1920, Short.MAX_VALUE)
         );
         desktopLayout.setVerticalGroup(
             desktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 768, Short.MAX_VALUE)
+            .addGap(0, 1080, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -97,12 +107,14 @@ public class Menu extends javax.swing.JFrame {
 
     private void abrirCliente(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_abrirCliente
 
-        CadastroCliente tela = new CadastroCliente();
+        ManterCliente tela = new ManterCliente();
+        Operacao operacao = Operacao.INATIVO;
         desktop.add(tela);
         tela.setVisible(true);
         tela.getBtExcluir().setEnabled(false);
         tela.getBtAlterar().setEnabled(false);
         tela.getBtConfirmar().setEnabled(false);
+        tela.getTfOperacao().setText(operacao.name());    
     }//GEN-LAST:event_abrirCliente
 
     /**
