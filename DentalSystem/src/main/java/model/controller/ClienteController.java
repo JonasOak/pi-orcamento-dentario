@@ -121,17 +121,16 @@ public class ClienteController implements ClienteDao {
             rs = st.executeQuery();
             
             List<Cliente> list = new ArrayList<>();
-            Map<Integer, Cliente> map = new HashMap<>();
-            
-            while (rs.next()) {
-                // Não criar clientes repetidos
-                Cliente cliente = map.get(rs.getInt("id_cliente"));
-                
-                if (cliente == null) {
-                    cliente = instanciarCliente(rs);
-                    map.put(rs.getInt("id_cliente"), cliente);
-                }
-                
+
+            while (rs.next()) {          
+                Cliente cliente = new Cliente();
+                cliente.setIdCliente(rs.getInt("id_cliente"));
+                cliente.setNomeCliente(rs.getString("nome"));
+                cliente.setEndereco(rs.getString("endereco"));
+                cliente.setUf(rs.getString("uf"));
+                cliente.setTelefone(rs.getString("telefone"));
+                cliente.setDocumento(rs.getString("documento"));
+                cliente.setEmail(rs.getString("email"));
                 list.add(cliente);
             }
             return list;
@@ -176,18 +175,5 @@ public class ClienteController implements ClienteDao {
             BD.closeStatement(st);
             BD.closeResultSet(rs);
         }
-    }
-    
-    // Método para instanciar cliente e não deixar o código verboso
-    private Cliente instanciarCliente(ResultSet rs) throws SQLException {
-        Cliente cliente = new Cliente();
-        cliente.setIdCliente(rs.getInt("id_cliente"));
-        cliente.setNomeCliente(rs.getString("nome"));
-        cliente.setEndereco(rs.getString("endereco"));
-        cliente.setUf(rs.getString("uf"));
-        cliente.setTelefone(rs.getString("telefone"));
-        cliente.setDocumento(rs.getString("documento"));
-        cliente.setEmail(rs.getString("email"));
-        return cliente;
     }
 }
