@@ -2,6 +2,7 @@ package model.view;
 
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import model.controller.ClienteController;
 import model.dao.DaoFactory;
 import model.entities.Cliente;
@@ -14,6 +15,11 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
     /**
      * Creates new form CadastroCliente
      */
+    
+    public Operacao getOperacao() {
+        return operacao;
+    }
+    
     public CadastroCliente() {
         initComponents();
     }
@@ -28,6 +34,10 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
     
     public JButton getBtConfirmar() {
         return btConfirmar;
+    }
+
+    public JTextField getTfOperacao() {
+        return tfOperacao;
     }
 
     /**
@@ -66,6 +76,8 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
         tfPesquisar = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
+        jLabel9 = new javax.swing.JLabel();
+        tfOperacao = new javax.swing.JTextField();
 
         setClosable(true);
         setMaximizable(true);
@@ -242,6 +254,11 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel9.setText("Operação atual:");
+
+        tfOperacao.setEditable(false);
+        tfOperacao.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -253,16 +270,22 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
                 .addComponent(tfPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton2)
+                .addGap(123, 123, 123)
+                .addComponent(jLabel9)
+                .addGap(18, 18, 18)
+                .addComponent(tfOperacao, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(12, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(jButton2)
-                    .addComponent(tfPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tfPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9)
+                    .addComponent(tfOperacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, 0))
         );
 
@@ -320,43 +343,49 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
          tfUF.setText(cliente.getUf());
          tfTel.setText(cliente.getTelefone());
          tfEmail.setText(cliente.getEmail());
+         tfPesquisar.requestFocus();
          
          btExcluir.setEnabled(true);
          btAlterar.setEnabled(true);
          btConfirmar.setEnabled(false);
+         this.operacao = Operacao.BUSCAR;
+         tfOperacao.setText(this.operacao.name());
         }
         catch (Exception e)
         {
             JOptionPane.showMessageDialog(null,"Erro ao Pesquisar","Erro",JOptionPane.ERROR_MESSAGE);
-            btExcluir.setEnabled(false);
-            btAlterar.setEnabled(false);
+            tfPesquisar.requestFocus();
         }
     }//GEN-LAST:event_aoClicarBuscar
 
     private void aoClicarAlterar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aoClicarAlterar
         btConfirmar.setEnabled(true);
         this.operacao = Operacao.ALTERAR;
+        tfOperacao.setText(this.operacao.name());
     }//GEN-LAST:event_aoClicarAlterar
 
     private void mostrarLista(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mostrarLista
-        // TODO add your handling code here:
+        ListaCliente form = new ListaCliente();
+        Operacao operacao = Operacao.INATIVO;
+        getDesktopPane().add(form);
+        form.setVisible(true);
     }//GEN-LAST:event_mostrarLista
 
     private void aoClicarExcluir(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aoClicarExcluir
         int resp = JOptionPane.showConfirmDialog(null,"Deseja Excluir o Registro?","Exclusão de Registro",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
-        btExcluir.setEnabled(false);
-        
+          
         if (resp == 0) {
             this.operacao = Operacao.EXCLUIR;
+            tfOperacao.setText(this.operacao.name());
             this.aoClicarConfirmar(evt);
             btAlterar.setEnabled(false);
+            btExcluir.setEnabled(false);
         }
         else {
             tfPesquisar.requestFocus();
         }
     }//GEN-LAST:event_aoClicarExcluir
 
-    
     private void aoClicarConfirmar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aoClicarConfirmar
        switch (operacao) {
             case INSERIR:
@@ -372,6 +401,9 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
                    
                     clienteController.inserir(cliente);
                     JOptionPane.showMessageDialog(null, "Operação Concluída com Sucesso", "Inserção", JOptionPane.INFORMATION_MESSAGE);
+                    this.operacao = Operacao.INATIVO;
+                    tfOperacao.setText(this.operacao.name());
+                    btConfirmar.setEnabled(false);
                 }
                 catch (Exception e) {
                     JOptionPane.showMessageDialog(null,"Houve um erro na inserção","Inserção",JOptionPane.ERROR_MESSAGE);
@@ -393,6 +425,10 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
                     
                     clienteController.atualizar(cliente);  
                     JOptionPane.showMessageDialog(null,"Operação Concluída com Sucesso","Alteração",JOptionPane.INFORMATION_MESSAGE);
+                    this.operacao = Operacao.INATIVO;
+                    tfOperacao.setText(this.operacao.name());
+                    btConfirmar.setEnabled(false);
+                    
                 }
                 catch (Exception e) {
                     JOptionPane.showMessageDialog(null,"Houve um erro na alteração","Alteração",JOptionPane.ERROR_MESSAGE);
@@ -414,6 +450,9 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
                     
                     clienteController.excluir(cliente);
                     JOptionPane.showMessageDialog(null,"Operação Concluída com Sucesso","Exclusão",JOptionPane.INFORMATION_MESSAGE);
+                    this.operacao = Operacao.INATIVO;
+                    tfOperacao.setText(this.operacao.name());
+                    btConfirmar.setEnabled(false);
                    
                     tfCodigo.setText("");
                     tfDocumento.setText("");
@@ -441,8 +480,10 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
         tfTel.setText("");
         tfEmail.setText("");
         btExcluir.setEnabled(false);
+        btAlterar.setEnabled(false);
         btConfirmar.setEnabled(true);
         this.operacao = Operacao.INSERIR;
+        tfOperacao.setText(this.operacao.name());
     }//GEN-LAST:event_aoClicarInserir
     
 
@@ -461,6 +502,7 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField tfCodigo;
@@ -468,6 +510,7 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
     private javax.swing.JTextField tfEmail;
     private javax.swing.JTextField tfEndereco;
     private javax.swing.JTextField tfNome;
+    private javax.swing.JTextField tfOperacao;
     private javax.swing.JTextField tfPesquisar;
     private javax.swing.JTextField tfTel;
     private javax.swing.JTextField tfUF;
