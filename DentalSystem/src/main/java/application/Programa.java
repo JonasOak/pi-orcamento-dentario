@@ -18,6 +18,13 @@ public class Programa {
         ItemDoOrcamentoController itemDoOrcamentoController = DaoFactory.criarItemDoOrcamentoController();
         List<Cliente> listC;
         List<Orcamento> listO;
+        
+//        listC = clienteController.buscarTodos();
+//        for (Cliente c : listC) {
+//            System.out.println(c);
+//        }
+        
+        
         //Cliente cliente1 = new Cliente(4, "Maria", "Rua dAS fLORES, 321", "SP", "(11) 987654321", "12.345.678-90", "maria@gmail.com");
         //Cliente cliente2 = new Cliente(5, "Alberto", "Rua Ferdinando, 123", "BA", "(71) 940028922", "12.431.493-21", "albertao@gmail.com");
         //Orcamento orcamento = orcamentoController.buscarPorId(4);
@@ -54,11 +61,11 @@ public class Programa {
         
         
         // Teste buscar por cliente
-        Cliente c = new Cliente(null, "ri", null, null, null, null, null);
-        List<Orcamento> list = orcamentoController.buscarPorCliente(c);
-        for (Orcamento obj : list) {
-            System.out.println(obj.toStringBuscaCliente());
-        }
+//        Cliente c = new Cliente(null, "ri", null, null, null, null, null);
+//        List<Orcamento> list = orcamentoController.buscarPorCliente(c);
+//        for (Orcamento obj : list) {
+//            System.out.println(obj.toStringBuscaCliente());
+//        }
         
         // --------------------------------------------------------------------------------------------------------------
         
