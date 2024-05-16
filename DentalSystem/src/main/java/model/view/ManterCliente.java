@@ -8,19 +8,19 @@ import model.dao.DaoFactory;
 import model.entities.Cliente;
 import model.entities.enums.Operacao;
 
-public class CadastroCliente extends javax.swing.JInternalFrame {
+public class ManterCliente extends javax.swing.JInternalFrame {
     
     private Operacao operacao;
 
     /**
-     * Creates new form CadastroCliente
+     * Creates new form ManterCliente
      */
     
     public Operacao getOperacao() {
         return operacao;
     }
     
-    public CadastroCliente() {
+    public ManterCliente() {
         initComponents();
     }
 
