@@ -13,4 +13,5 @@ public interface OrcamentoDao {
     Orcamento buscarPorId(Integer id);
     List<Orcamento> buscarTodos();
     List<Orcamento> buscarPorCliente(Cliente c);
+    List<Cliente> buscarTodosClientes();
 }
