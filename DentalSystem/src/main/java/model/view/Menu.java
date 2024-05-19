@@ -35,6 +35,7 @@ public class Menu extends javax.swing.JFrame {
         barraCliente = new javax.swing.JMenu();
         CadastrarCliente = new javax.swing.JMenuItem();
         barraOrcamento = new javax.swing.JMenu();
+        ManterOrcamento = new javax.swing.JMenuItem();
         barraItemDoOrcamento = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -82,6 +83,16 @@ public class Menu extends javax.swing.JFrame {
         menu.add(barraCliente);
 
         barraOrcamento.setText("Orcamento");
+
+        ManterOrcamento.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        ManterOrcamento.setText("Manter Orçamento");
+        ManterOrcamento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                abrirOrcamento(evt);
+            }
+        });
+        barraOrcamento.add(ManterOrcamento);
+
         menu.add(barraOrcamento);
 
         barraItemDoOrcamento.setText("Item Orcamento");
@@ -116,6 +127,13 @@ public class Menu extends javax.swing.JFrame {
         tela.getBtConfirmar().setEnabled(false);
         tela.getTfOperacao().setText(operacao.name());    
     }//GEN-LAST:event_abrirCliente
+
+    private void abrirOrcamento(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_abrirOrcamento
+        ManterOrcamento tela = new ManterOrcamento();
+        Operacao operacao = Operacao.INATIVO;
+        desktop.add(tela);
+        tela.setVisible(true);
+    }//GEN-LAST:event_abrirOrcamento
 
     /**
      * @param args the command line arguments
@@ -154,6 +172,7 @@ public class Menu extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem CadastrarCliente;
+    private javax.swing.JMenuItem ManterOrcamento;
     private javax.swing.JMenu barraCliente;
     private javax.swing.JMenu barraItemDoOrcamento;
     private javax.swing.JMenu barraOrcamento;
