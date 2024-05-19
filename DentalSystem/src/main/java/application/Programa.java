@@ -1,5 +1,6 @@
 package application;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import model.controller.ClienteController;
@@ -7,6 +8,7 @@ import model.controller.ItemDoOrcamentoController;
 import model.controller.OrcamentoController;
 import model.dao.DaoFactory;
 import model.entities.Cliente;
+import model.entities.ItemDoOrcamento;
 import model.entities.Orcamento;
 
 public class Programa {
@@ -19,9 +21,22 @@ public class Programa {
         List<Cliente> listC;
         List<Orcamento> listO;
         
+        BigDecimal valor = BigDecimal.valueOf(400);
+        Cliente clienteTeste = new Cliente(4, "Maria", "Rua dAS fLORES, 321", "SP", "(11) 987654321", "12.345.678-90", "maria@gmail.com");
+        Orcamento o = new Orcamento(4, new Date(), "Caixa", new Date(), "Teste", clienteTeste);
+        ItemDoOrcamento item = new ItemDoOrcamento(3, "Incisivo Central Superior Direito", "limpeza", valor, o);
+        
+        itemDoOrcamentoController.inserir(item);
+        
+        
 //        listC = clienteController.buscarTodos();
 //        for (Cliente c : listC) {
 //            System.out.println(c);
+//        }
+
+//        listO = orcamentoController.buscarTodosOrcamentos();
+//        for (Orcamento o : listO) {
+//            System.out.println(o);
 //        }
         
         
