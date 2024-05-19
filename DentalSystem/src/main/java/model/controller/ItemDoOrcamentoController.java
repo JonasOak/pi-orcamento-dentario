@@ -30,7 +30,7 @@ public class ItemDoOrcamentoController implements ItemDoOrcamentoDAO {
                     "INSERT INTO item_do_orcamento "
                     + "(fk_id_orcamento, servico, valor, dente) "
                     + "VALUES "
-                    + "(?, ?, ?)",
+                    + "(?, ?, ?, ?)",
                     Statement.RETURN_GENERATED_KEYS);
             
             st.setInt(1, item.getOrcamento().getIdOrcamento());
@@ -112,7 +112,7 @@ public class ItemDoOrcamentoController implements ItemDoOrcamentoDAO {
             st = conn.prepareStatement(
                     "SELECT c.id_cliente, c.nome, c.endereco, c.uf, c.telefone, c.documento, c.email, "
                     + "o.id_orcamento, o.data_registro, o.data_agendamento, o.plano, o.fk_id_cliente, o.observacao, "
-                    + "i.id_item_orcamento,"
+                    + "i.* "
                     + "FROM orcamento o JOIN cliente c "
                     + "ON o.fk_id_cliente = c.id_cliente "
                     + "JOIN item_do_orcamento i ON i.fk_id_orcamento = o.id_orcamento "
