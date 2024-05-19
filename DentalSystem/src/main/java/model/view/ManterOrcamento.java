@@ -454,7 +454,7 @@ public class ManterOrcamento extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_aoClicarConfirmar
 
     private void mostrarLista(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mostrarLista
-        ListaCliente form = new ListaCliente();
+        ListaOrcamento form = new ListaOrcamento();
         Operacao operacao = Operacao.INATIVO;
         getDesktopPane().add(form);
         form.setVisible(true);
