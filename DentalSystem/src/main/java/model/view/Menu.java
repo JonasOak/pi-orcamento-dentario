@@ -1,6 +1,5 @@
 package model.view;
 
-import java.awt.BorderLayout;
 import javax.swing.JDesktopPane;
 import model.entities.enums.Operacao;
 
@@ -37,6 +36,7 @@ public class Menu extends javax.swing.JFrame {
         barraOrcamento = new javax.swing.JMenu();
         ManterOrcamento = new javax.swing.JMenuItem();
         barraItemDoOrcamento = new javax.swing.JMenu();
+        ManterItemOrcamento = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Menu");
@@ -85,7 +85,7 @@ public class Menu extends javax.swing.JFrame {
         barraOrcamento.setText("Orcamento");
 
         ManterOrcamento.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.CTRL_DOWN_MASK));
-        ManterOrcamento.setText("Manter Orçamento");
+        ManterOrcamento.setText("Manter Orcamento");
         ManterOrcamento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 abrirOrcamento(evt);
@@ -96,6 +96,16 @@ public class Menu extends javax.swing.JFrame {
         menu.add(barraOrcamento);
 
         barraItemDoOrcamento.setText("Item Orcamento");
+
+        ManterItemOrcamento.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F5, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        ManterItemOrcamento.setText("Manter Item Orcamento");
+        ManterItemOrcamento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                abrirItemOrcamento(evt);
+            }
+        });
+        barraItemDoOrcamento.add(ManterItemOrcamento);
+
         menu.add(barraItemDoOrcamento);
 
         setJMenuBar(menu);
@@ -133,7 +143,22 @@ public class Menu extends javax.swing.JFrame {
         Operacao operacao = Operacao.INATIVO;
         desktop.add(tela);
         tela.setVisible(true);
+        tela.getBtExcluir().setEnabled(false);
+        tela.getBtAlterar().setEnabled(false);
+        tela.getBtConfirmar().setEnabled(false);
+        tela.getTfOperacao().setText(operacao.name());
     }//GEN-LAST:event_abrirOrcamento
+
+    private void abrirItemOrcamento(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_abrirItemOrcamento
+        ManterItemDoOrcamento tela = new ManterItemDoOrcamento();
+        Operacao operacao = Operacao.INATIVO;
+        desktop.add(tela);
+        tela.setVisible(true);
+        tela.getBtExcluir().setEnabled(false);
+        tela.getBtAlterar().setEnabled(false);
+        tela.getBtConfirmar().setEnabled(false);
+        tela.getTfOperacao().setText(operacao.name());
+    }//GEN-LAST:event_abrirItemOrcamento
 
     /**
      * @param args the command line arguments
@@ -172,6 +197,7 @@ public class Menu extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem CadastrarCliente;
+    private javax.swing.JMenuItem ManterItemOrcamento;
     private javax.swing.JMenuItem ManterOrcamento;
     private javax.swing.JMenu barraCliente;
     private javax.swing.JMenu barraItemDoOrcamento;

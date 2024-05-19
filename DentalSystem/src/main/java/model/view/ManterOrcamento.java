@@ -3,8 +3,10 @@ package model.view;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.text.MaskFormatter;
 import model.controller.OrcamentoController;
 import model.dao.DaoFactory;
@@ -26,6 +28,22 @@ public class ManterOrcamento extends javax.swing.JInternalFrame {
     public ManterOrcamento() {
         initComponents();
         povoarCliente();
+    }
+    
+    public JButton getBtExcluir() {
+        return btExcluir;
+    }
+
+    public JButton getBtAlterar() {
+        return btAlterar;
+    }
+    
+    public JButton getBtConfirmar() {
+        return btConfirmar;
+    }
+
+    public JTextField getTfOperacao() {
+        return tfOperacao;
     }
     
     private void povoarCliente(){
@@ -77,6 +95,7 @@ public class ManterOrcamento extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setMaximizable(true);
+        setResizable(true);
         setTitle("Manter Orcamento");
         setName(""); // NOI18N
         setPreferredSize(new java.awt.Dimension(759, 332));
@@ -109,8 +128,8 @@ public class ManterOrcamento extends javax.swing.JInternalFrame {
                 .addGap(123, 123, 123)
                 .addComponent(jLabel9)
                 .addGap(18, 18, 18)
-                .addComponent(tfOperacao, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(92, Short.MAX_VALUE))
+                .addComponent(tfOperacao, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -253,7 +272,7 @@ public class ManterOrcamento extends javax.swing.JInternalFrame {
                         .addComponent(btInserir, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btConfirmar, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(10, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -523,4 +542,5 @@ public class ManterOrcamento extends javax.swing.JInternalFrame {
     private javax.swing.JTextField tfPlano;
     private javax.swing.JFormattedTextField tfRegistro;
     // End of variables declaration//GEN-END:variables
+
 }

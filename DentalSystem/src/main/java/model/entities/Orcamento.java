@@ -95,6 +95,7 @@ public class Orcamento {
         return Objects.equals(this.idOrcamento, other.idOrcamento);
     }
 
+    /*
     @Override
     public String toString() {
         String clienteString = cliente != null ? cliente.toStringBuscaId() : "Cliente não especificado";
@@ -105,6 +106,12 @@ public class Orcamento {
                + "Data Agendamento: " + dataAgendamento + "\n" 
                + "Observação: " + observacao + "\n"
                + "ID Cliente: " + clienteString;
+    }
+    */
+    
+    @Override
+    public String toString() {
+        return String.valueOf(idOrcamento);
     }
     
     public String toStringBuscaCliente() {

@@ -222,6 +222,32 @@ public class OrcamentoController implements OrcamentoDao {
             BD.closeResultSet(rs);
         }
     }
+    
+    public List buscarTodosOrcamentos() {
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        try {
+            st = conn.prepareStatement("SELECT orcamento.*, id_cliente FROM orcamento "
+                                       + "JOIN cliente ON cliente.id_cliente = orcamento.fk_id_cliente");
+            rs = st.executeQuery();
+            List<Orcamento> list = new ArrayList<>();
+            while (rs.next()) {
+                Cliente c = new Cliente();
+                
+                c.setIdCliente(rs.getInt("id_cliente"));
+                Orcamento orcamento = instanciarOrcamento(rs, c);
+                list.add(orcamento);
+            }
+            return list;
+        }
+        catch (SQLException e) {
+            throw new ExcecaoBd(e.getMessage());
+        }
+        finally {
+            BD.closeStatement(st);
+            BD.closeResultSet(rs);
+        }
+    }
 
     // Método para instanciar cliente e não deixar o código verboso
     private Cliente instanciarCliente(ResultSet rs) throws SQLException {
