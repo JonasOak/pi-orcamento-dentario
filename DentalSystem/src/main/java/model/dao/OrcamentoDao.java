@@ -12,6 +12,6 @@ public interface OrcamentoDao {
     void deletarPorId(Orcamento o);
     Orcamento buscarPorId(Integer id);
     List<Orcamento> buscarTodos();
-    List<Orcamento> buscarPorCliente(Cliente c);
+    List<Orcamento> buscarPorCliente(Integer id);
     List<Cliente> buscarTodosClientes();
 }

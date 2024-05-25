@@ -80,8 +80,6 @@ public class ManterCliente extends javax.swing.JInternalFrame {
         tfOperacao = new javax.swing.JTextField();
 
         setClosable(true);
-        setMaximizable(true);
-        setResizable(true);
         setTitle("Manter Cliente");
 
         jLabel1.setText("Codigo:");

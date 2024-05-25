@@ -2,17 +2,17 @@ package model.controller;
 
 import db.BD;
 import db.ExcecaoBd;
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import model.dao.OrcamentoDao;
 import model.entities.Cliente;
+import model.entities.ItemDoOrcamento;
 import model.entities.Orcamento;
 
 public class OrcamentoController implements OrcamentoDao {
@@ -168,17 +168,17 @@ public class OrcamentoController implements OrcamentoDao {
     }
     
     @Override
-    public List<Orcamento> buscarPorCliente(Cliente c) {
+    public List<Orcamento> buscarPorCliente(Integer id) {
         PreparedStatement st = null;
         ResultSet rs = null;
         try {
             st = conn.prepareStatement(
                     "SELECT cliente.nome, orcamento.* FROM orcamento "
                     + "JOIN cliente ON cliente.id_cliente = orcamento.fk_id_cliente "
-                    + "WHERE cliente.nome LIKE ? "
-                    + "ORDER BY cliente.nome");
+                    + "WHERE fk_id_cliente = ? "
+                    + "ORDER BY fk_id_cliente");
             
-            st.setString(1, "%" + c.getNomeCliente() + "%");
+            st.setInt(1, id);
             
             rs = st.executeQuery();
             List<Orcamento> list = new ArrayList<>();
@@ -248,6 +248,33 @@ public class OrcamentoController implements OrcamentoDao {
             BD.closeResultSet(rs);
         }
     }
+    
+    public BigDecimal exibirValorTotal(Integer id) {
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        try {
+            st = conn.prepareStatement(
+                "SELECT SUM(valor) "
+                + "FROM item_do_orcamento "
+                + "WHERE fk_id_orcamento = ?");
+
+            st.setInt(1, id);
+            rs = st.executeQuery();
+
+            if (rs.next()) {
+                BigDecimal valor = rs.getBigDecimal(1);
+                return valor;
+            }
+            return null;
+        }
+        catch (SQLException e) {
+            throw new ExcecaoBd((e.getMessage()));
+        }
+        finally {
+            BD.closeStatement(st);
+            BD.closeResultSet(rs);
+        }
+    }
 
     // Método para instanciar cliente e não deixar o código verboso
     private Cliente instanciarCliente(ResultSet rs) throws SQLException {
@@ -272,5 +299,16 @@ public class OrcamentoController implements OrcamentoDao {
         o.setCliente(c);
         o.setObservacao(rs.getString("observacao"));
         return o;
+    }
+    
+        // Método para instanciar item do orçamento e não deixar o código verboso
+    private ItemDoOrcamento instanciarItemDoOrcamento(ResultSet rs, Cliente c, Orcamento o) throws SQLException {
+        ItemDoOrcamento item = new ItemDoOrcamento();
+        item.setIdItemDoOrcamento(rs.getInt("id_item_orcamento"));
+        item.setOrcamento(o);
+        item.setServico(rs.getString("servico"));
+        item.setValor(rs.getBigDecimal("valor"));
+        item.setDente(rs.getString("dente"));
+        return item;
     }
 }

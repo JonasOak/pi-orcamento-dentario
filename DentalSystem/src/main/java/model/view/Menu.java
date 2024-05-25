@@ -17,7 +17,7 @@ public class Menu extends javax.swing.JFrame {
     public JDesktopPane getDesktop() {
         return desktop;
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -146,6 +146,7 @@ public class Menu extends javax.swing.JFrame {
         tela.getBtExcluir().setEnabled(false);
         tela.getBtAlterar().setEnabled(false);
         tela.getBtConfirmar().setEnabled(false);
+        tela.getBtValorTotal().setEnabled(false);
         tela.getTfOperacao().setText(operacao.name());
     }//GEN-LAST:event_abrirOrcamento
 

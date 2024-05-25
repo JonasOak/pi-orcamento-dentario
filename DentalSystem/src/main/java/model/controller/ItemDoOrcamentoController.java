@@ -73,6 +73,7 @@ public class ItemDoOrcamentoController implements ItemDoOrcamentoDAO {
             st.setString(2, item.getServico());
             st.setBigDecimal(3, item.getValor());
             st.setString(4, item.getDente());
+            st.setInt(5, item.getIdItemDoOrcamento());
         
             st.executeUpdate();
         }
@@ -91,7 +92,7 @@ public class ItemDoOrcamentoController implements ItemDoOrcamentoDAO {
             throw new ExcecaoBd("O valor passado não pode ser nulo");
         }
         try {
-            st = conn.prepareStatement("DELETE FROM orcamento WHERE id_item_orcamento = ?");
+            st = conn.prepareStatement("DELETE FROM item_do_orcamento WHERE id_item_orcamento = ?");
 
             st.setInt(1, item.getIdItemDoOrcamento());
             st.executeUpdate();
@@ -116,7 +117,7 @@ public class ItemDoOrcamentoController implements ItemDoOrcamentoDAO {
                     + "FROM orcamento o JOIN cliente c "
                     + "ON o.fk_id_cliente = c.id_cliente "
                     + "JOIN item_do_orcamento i ON i.fk_id_orcamento = o.id_orcamento "
-                    + "WHERE o.id_orcamento = ?");
+                    + "WHERE i.id_item_orcamento = ?");
             
             st.setInt(1, id);
             rs = st.executeQuery();

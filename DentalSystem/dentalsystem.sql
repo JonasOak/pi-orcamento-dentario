@@ -53,7 +53,7 @@ CREATE TABLE IF NOT EXISTS `usuario` (
 
 DELIMITER $$
 
-CREATE TRIGGER IF NOT EXISTS `before_insert_cliente` 
+CREATE TRIGGER `before_insert_cliente` 
 BEFORE INSERT ON `cliente` 
 FOR EACH ROW 
 BEGIN
@@ -75,7 +75,7 @@ BEGIN
 END;
 $$
 
-CREATE TRIGGER IF NOT EXISTS `before_update_cliente` 
+CREATE TRIGGER `before_update_cliente` 
 BEFORE UPDATE ON `cliente` 
 FOR EACH ROW 
 BEGIN
@@ -93,6 +93,123 @@ BEGIN
     END IF;
     IF NEW.documento = '' THEN
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'documento não pode ser vazio';
+    END IF;
+END;
+$$
+
+-- Trigger para a tabela `orcamento`
+CREATE TRIGGER before_insert_orcamento 
+BEFORE INSERT ON `orcamento` 
+FOR EACH ROW 
+BEGIN
+    IF NEW.data_registro IS NULL THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'data_registro não pode ser nulo';
+    END IF;
+    IF NEW.data_agendamento IS NULL THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'data_agendamento não pode ser nulo';
+    END IF;
+    IF NEW.plano = '' THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'plano não pode ser vazio';
+    END IF;
+    IF NEW.fk_id_cliente IS NULL THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'fk_id_cliente não pode ser nulo';
+    END IF;
+END;
+$$
+
+CREATE TRIGGER before_update_orcamento 
+BEFORE UPDATE ON `orcamento` 
+FOR EACH ROW 
+BEGIN
+    IF NEW.data_registro IS NULL THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'data_registro não pode ser nulo';
+    END IF;
+    IF NEW.data_agendamento IS NULL THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'data_agendamento não pode ser nulo';
+    END IF;
+    IF NEW.plano = '' THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'plano não pode ser vazio';
+    END IF;
+    IF NEW.fk_id_cliente IS NULL THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'fk_id_cliente não pode ser nulo';
+    END IF;
+END;
+$$
+
+-- Trigger para a tabela `item_do_orcamento`
+CREATE TRIGGER before_insert_item_do_orcamento 
+BEFORE INSERT ON `item_do_orcamento` 
+FOR EACH ROW 
+BEGIN
+    IF NEW.fk_id_orcamento IS NULL THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'fk_id_orcamento não pode ser nulo';
+    END IF;
+    IF NEW.servico = '' THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'servico não pode ser vazio';
+    END IF;
+    IF NEW.valor IS NULL THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'valor não pode ser nulo';
+    END IF;
+    IF NEW.dente = '' THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'dente não pode ser vazio';
+    END IF;
+END;
+$$
+
+CREATE TRIGGER before_update_item_do_orcamento 
+BEFORE UPDATE ON `item_do_orcamento` 
+FOR EACH ROW 
+BEGIN
+    IF NEW.fk_id_orcamento IS NULL THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'fk_id_orcamento não pode ser nulo';
+    END IF;
+    IF NEW.servico = '' THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'servico não pode ser vazio';
+    END IF;
+    IF NEW.valor IS NULL THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'valor não pode ser nulo';
+    END IF;
+    IF NEW.dente = '' THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'dente não pode ser vazio';
+    END IF;
+END;
+$$
+
+-- Trigger para a tabela `usuario`
+CREATE TRIGGER before_insert_usuario 
+BEFORE INSERT ON `usuario` 
+FOR EACH ROW 
+BEGIN
+    IF NEW.nome = '' THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'nome não pode ser vazio';
+    END IF;
+    IF NEW.cargo = '' THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'cargo não pode ser vazio';
+    END IF;
+    IF NEW.login = '' THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'login não pode ser vazio';
+    END IF;
+    IF NEW.senha = '' THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'senha não pode ser vazio';
+    END IF;
+END;
+$$
+
+CREATE TRIGGER before_update_usuario 
+BEFORE UPDATE ON `usuario` 
+FOR EACH ROW 
+BEGIN
+    IF NEW.nome = '' THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'nome não pode ser vazio';
+    END IF;
+    IF NEW.cargo = '' THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'cargo não pode ser vazio';
+    END IF;
+    IF NEW.login = '' THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'login não pode ser vazio';
+    END IF;
+    IF NEW.senha = '' THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'senha não pode ser vazio';
     END IF;
 END;
 $$

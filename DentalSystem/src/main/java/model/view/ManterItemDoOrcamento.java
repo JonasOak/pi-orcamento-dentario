@@ -1,5 +1,6 @@
 package model.view;
 
+import java.awt.event.ActionListener;
 import java.math.BigDecimal;
 import java.util.List;
 import javax.swing.JButton;
@@ -21,11 +22,38 @@ public class ManterItemDoOrcamento extends javax.swing.JInternalFrame {
     private Operacao operacao;
     
     String[] nomesDentes = {
-        "Incisivo Central Superior Direito", "Incisivo Lateral Superior Direito", 
-        "Canino Superior Direito", "Primeiro Pré-Molar Superior Direito", 
-        "Segundo Pré-Molar Superior Direito", "Primeiro Molar Superior Direito", 
-        "Segundo Molar Superior Direito", "Terceiro Molar Superior Direito",
-        // Adicione todos os outros nomes de dentes aqui
+        "Incisivo Central Superior Direito - 11", 
+        "Incisivo Lateral Superior Direito - 12",
+        "Canino Superior Direito - 13",
+        "Primeiro Pré-Molar Superior Direito - 14",
+        "Segundo Pré-Molar Superior Direito - 15",
+        "Primeiro Molar Superior Direito - 16",
+        "Segundo Molar Superior Direito - 17",
+        "Terceiro Molar Superior Direito - 18",
+        "Incisivo Central Superior Esquerdo - 21", 
+        "Incisivo Lateral Superior Esquerdo - 22",
+        "Canino Superior Esquerdo - 23",
+        "Primeiro Pré-Molar Superior Esquerdo - 24",
+        "Segundo Pré-Molar Superior Esquerdo - 25",
+        "Primeiro Molar Superior Esquerdo - 26",
+        "Segundo Molar Superior Esquerdo - 27",
+        "Terceiro Molar Superior Esquerdo - 28",
+        "Incisivo Central Inferior Direito - 31", 
+        "Incisivo Lateral Inferior Direito - 32",
+        "Canino Inferior Direito - 33",
+        "Primeiro Pré-Molar Inferior Direito - 34",
+        "Segundo Pré-Molar Inferior Direito - 35",
+        "Primeiro Molar Inferior Direito - 36",
+        "Segundo Molar Inferior Direito - 37",
+        "Terceiro Molar Inferior Direito - 38",
+        "Incisivo Central Inferior Esquerdo - 41", 
+        "Incisivo Lateral Inferior Esquerdo - 42",
+        "Canino Inferior Esquerdo - 43",
+        "Primeiro Pré-Molar Inferior Esquerdo - 44",
+        "Segundo Pré-Molar Inferior Esquerdo - 45",
+        "Primeiro Molar Inferior Esquerdo - 46",
+        "Segundo Molar Inferior Esquerdo - 47",
+        "Terceiro Molar Inferior Esquerdo - 48"
     };
     
     /**
@@ -61,6 +89,9 @@ public class ManterItemDoOrcamento extends javax.swing.JInternalFrame {
             for(Cliente c : lista){
                 listaCliente.addItem(c);
             }
+            
+            listaCliente.addActionListener(this::listaClienteActionPerformed);
+            
         } catch (Exception ex) {
             ex.getMessage();
         }    
@@ -69,10 +100,16 @@ public class ManterItemDoOrcamento extends javax.swing.JInternalFrame {
     private void povoarOrcamento() {
         try {
             OrcamentoController dao = DaoFactory.criarOrcamentoController();
-            List<Orcamento> lista = dao.buscarTodosOrcamentos();
-            for(Orcamento o : lista){
-                listaOrcamento.addItem(o);
+            Cliente cliente = (Cliente) listaCliente.getSelectedItem();
+            
+            if (cliente != null) {
+                List<Orcamento> lista = dao.buscarPorCliente(cliente.getIdCliente());
+                listaOrcamento.removeAllItems();
+                for (Orcamento o : lista) {
+                    listaOrcamento.addItem(o);
+                }
             }
+            
         } catch (Exception ex) {
             ex.getMessage();
         }
@@ -109,18 +146,16 @@ public class ManterItemDoOrcamento extends javax.swing.JInternalFrame {
         jLabel6 = new javax.swing.JLabel();
         listaOrcamento = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
-        listaDente = new javax.swing.JComboBox<>();
+        listaDente = new javax.swing.JComboBox();
         jLabel8 = new javax.swing.JLabel();
-        tfValor = new javax.swing.JFormattedTextField();
         btAlterar = new javax.swing.JButton();
         btExcluir = new javax.swing.JButton();
         btListar = new javax.swing.JButton();
         btInserir = new javax.swing.JButton();
         btConfirmar = new javax.swing.JButton();
+        tfValor = new javax.swing.JTextField();
 
         setClosable(true);
-        setMaximizable(true);
-        setResizable(true);
 
         jLabel1.setText("Digite o código:");
 
@@ -177,6 +212,12 @@ public class ManterItemDoOrcamento extends javax.swing.JInternalFrame {
 
         jLabel5.setText("Cliente:");
 
+        listaCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                listaClienteActionPerformed(evt);
+            }
+        });
+
         jLabel6.setText("N° Orçamento:");
 
         listaOrcamento.addActionListener(new java.awt.event.ActionListener() {
@@ -188,8 +229,6 @@ public class ManterItemDoOrcamento extends javax.swing.JInternalFrame {
         jLabel7.setText("Dente:");
 
         jLabel8.setText("Valor:");
-
-        tfValor.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getCurrencyInstance())));
 
         btAlterar.setText("Alterar");
         btAlterar.addActionListener(new java.awt.event.ActionListener() {
@@ -358,7 +397,7 @@ public class ManterItemDoOrcamento extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_aoClicarExcluir
 
     private void mostrarLista(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mostrarLista
-        ListaOrcamento form = new ListaOrcamento();
+        ListaItemDoOrcamento form = new ListaItemDoOrcamento();
         Operacao operacao = Operacao.INATIVO;
         getDesktopPane().add(form);
         form.setVisible(true);
@@ -367,6 +406,7 @@ public class ManterItemDoOrcamento extends javax.swing.JInternalFrame {
     private void aoClicarInserir(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aoClicarInserir
         tfCodigo.setText("");
         tfValor.setText("");
+        tfServico.setText("");
         btExcluir.setEnabled(false);
         btAlterar.setEnabled(false);
         btConfirmar.setEnabled(true);
@@ -384,7 +424,15 @@ public class ManterItemDoOrcamento extends javax.swing.JInternalFrame {
                 itemDoOrcamento.setServico(tfServico.getText());
                 itemDoOrcamento.setOrcamento((Orcamento)listaOrcamento.getSelectedItem());
                 itemDoOrcamento.getOrcamento().setCliente((Cliente)listaCliente.getSelectedItem());
-                itemDoOrcamento.setValor(new BigDecimal(tfValor.getText()));
+                itemDoOrcamento.setDente((String) listaDente.getSelectedItem());
+                
+                String valorTexto = tfValor.getText();
+                BigDecimal valor = null;
+                if (valorTexto == null || valorTexto.trim().isEmpty())
+                    throw new NumberFormatException("Valor está vazio ou nulo");
+                valorTexto = valorTexto.trim().replace(",", ".");
+                valor = new BigDecimal(valorTexto);
+                itemDoOrcamento.setValor(valor);
 
                 itemDoOrcamentoController.inserir(itemDoOrcamento);
                 JOptionPane.showMessageDialog(null, "Operação Concluída com Sucesso", "Inserção", JOptionPane.INFORMATION_MESSAGE);
@@ -394,26 +442,25 @@ public class ManterItemDoOrcamento extends javax.swing.JInternalFrame {
             }
             catch (Exception e) {
                 JOptionPane.showMessageDialog(null,e.getMessage(),"Inserção",JOptionPane.ERROR_MESSAGE);
+                //e.printStackTrace();
             }
             break;
 
-
             case ALTERAR:
             try {
-                OrcamentoController orcamentoController = DaoFactory.criarOrcamentoController();
-                Orcamento orcamento = new Orcamento();
+                ItemDoOrcamentoController itemDoOrcamentoController = DaoFactory.criarItemDoOrcamentoController();
+                ItemDoOrcamento itemDoOrcamento = new ItemDoOrcamento();
+                String valorTexto = tfValor.getText();
+                BigDecimal valor = new BigDecimal(valorTexto);
 
-                orcamento.setIdOrcamento(Integer.parseInt(tfCodigo.getText()));
-                //Date dataRegistro = formatter.parse(tfRegistro.getText());
-                //Date dataAgendamento = formatter.parse(tfAgendamento.getText());
+                itemDoOrcamento.setIdItemDoOrcamento(Integer.parseInt(tfCodigo.getText()));
+                itemDoOrcamento.setServico(tfServico.getText());
+                itemDoOrcamento.setOrcamento((Orcamento)listaOrcamento.getSelectedItem());
+                itemDoOrcamento.getOrcamento().setCliente((Cliente)listaCliente.getSelectedItem());
+                itemDoOrcamento.setDente((String)listaDente.getSelectedItem());
+                itemDoOrcamento.setValor(valor);
 
-                //orcamento.setDataRegistro(dataRegistro);
-                //orcamento.setDataAgendamento(dataAgendamento);
-                orcamento.setCliente((Cliente)listaCliente.getSelectedItem());
-                //orcamento.setPlano(tfPlano.getText());
-                //orcamento.setObservacao(tfObs.getText());
-
-                orcamentoController.atualizar(orcamento);
+                itemDoOrcamentoController.atualizar(itemDoOrcamento);
                 JOptionPane.showMessageDialog(null,"Operação Concluída com Sucesso","Alteração",JOptionPane.INFORMATION_MESSAGE);
                 this.operacao = Operacao.INATIVO;
                 tfOperacao.setText(this.operacao.name());
@@ -422,39 +469,39 @@ public class ManterItemDoOrcamento extends javax.swing.JInternalFrame {
             }
             catch (Exception e) {
                 JOptionPane.showMessageDialog(null,"Houve um erro na alteração","Alteração",JOptionPane.ERROR_MESSAGE);
+                e.printStackTrace();
             }
             break;
 
             case EXCLUIR:
             try {
-                OrcamentoController orcamentoController = DaoFactory.criarOrcamentoController();
-                Orcamento orcamento = new Orcamento();
-                //Date dataRegistro = formatter.parse(tfRegistro.getText());
-                //Date dataAgendamento = formatter.parse(tfAgendamento.getText());
+                ItemDoOrcamentoController itemDoOrcamentoController = DaoFactory.criarItemDoOrcamentoController();
+                ItemDoOrcamento itemDoOrcamento = new ItemDoOrcamento();
+                String valorTexto = tfValor.getText();
+                BigDecimal valor = new BigDecimal(valorTexto);
 
-                orcamento.setIdOrcamento(Integer.parseInt(tfCodigo.getText()));
-                //orcamento.setDataRegistro(dataRegistro);
-                //orcamento.setDataAgendamento(dataAgendamento);
-                orcamento.setCliente((Cliente)listaCliente.getSelectedItem());
-                //orcamento.setPlano(tfPlano.getText());
-                //orcamento.setObservacao(tfObs.getText());
+                itemDoOrcamento.setIdItemDoOrcamento(Integer.parseInt(tfCodigo.getText()));
+                itemDoOrcamento.setServico(tfServico.getText());
+                itemDoOrcamento.setOrcamento((Orcamento)listaOrcamento.getSelectedItem());
+                itemDoOrcamento.getOrcamento().setCliente((Cliente)listaCliente.getSelectedItem());
+                itemDoOrcamento.setDente((String)listaDente.getSelectedItem());
+                itemDoOrcamento.setValor(valor);
 
-                orcamentoController.deletarPorId(orcamento);
+                itemDoOrcamentoController.deletarPorId(itemDoOrcamento);
                 JOptionPane.showMessageDialog(null,"Operação Concluída com Sucesso","Exclusão",JOptionPane.INFORMATION_MESSAGE);
                 this.operacao = Operacao.INATIVO;
                 tfOperacao.setText(this.operacao.name());
                 btConfirmar.setEnabled(false);
 
                 tfCodigo.setText("");
-                //tfRegistro.setText("");
-                //tfAgendamento.setText("");
-                //tfPlano.setText("");
-                //tfObs.setText("");
+                tfServico.setText("");
+                tfValor.setText("");
                 tfPesquisar.setText("");
                 tfPesquisar.requestFocus();
             }
             catch (Exception e) {
-                JOptionPane.showMessageDialog(null,"Houve um erro na exclusão","Exclusão",JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null,e.getMessage(),"Exclusão",JOptionPane.ERROR_MESSAGE);
+                e.printStackTrace();
             }
             break;
         }
@@ -464,26 +511,22 @@ public class ManterItemDoOrcamento extends javax.swing.JInternalFrame {
         try {
             
             ItemDoOrcamentoController itemDoOrcamentoController = DaoFactory.criarItemDoOrcamentoController();
-            ItemDoOrcamento itemDoOrcamento =  new ItemDoOrcamento();
-            Orcamento orcamento = new Orcamento();
-            Cliente cliente = new Cliente();
-            
+            ItemDoOrcamento itemDoOrcamento = new ItemDoOrcamento();
+
             itemDoOrcamento = itemDoOrcamentoController.buscarPorId(Integer.parseInt(tfPesquisar.getText()));
             tfCodigo.setText(String.valueOf(itemDoOrcamento.getIdItemDoOrcamento()));
             tfValor.setText(itemDoOrcamento.getValor().toString());
             tfServico.setText(itemDoOrcamento.getServico());
             
-            cliente = orcamento.getCliente();
-            listaCliente.setSelectedItem(cliente);
-            orcamento.getIdOrcamento();
-            listaOrcamento.setSelectedItem(orcamento);
+            Cliente c = itemDoOrcamento.getOrcamento().getCliente();
+            listaCliente.setSelectedItem(c);
+            
+            Orcamento o = itemDoOrcamento.getOrcamento();
+            listaOrcamento.setSelectedItem(o);
+            
+            listaDente.setSelectedItem(itemDoOrcamento.getDente());
+            
             tfPesquisar.requestFocus();
-            
-            
-            itemDoOrcamento.getDente();
-            listaDente.setSelectedItem(itemDoOrcamento);
-            //"Erro ao Pesquisar"
-
             btExcluir.setEnabled(true);
             btAlterar.setEnabled(true);
             btConfirmar.setEnabled(false);
@@ -492,7 +535,7 @@ public class ManterItemDoOrcamento extends javax.swing.JInternalFrame {
         }
         catch (Exception e)
         {
-            JOptionPane.showMessageDialog(null,e.getMessage(),"Erro",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null,"Erro ao Pesquisar","Erro",JOptionPane.ERROR_MESSAGE);
             tfPesquisar.requestFocus();
         }
     }//GEN-LAST:event_aoClicarBuscar
@@ -500,6 +543,10 @@ public class ManterItemDoOrcamento extends javax.swing.JInternalFrame {
     private void listaOrcamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listaOrcamentoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_listaOrcamentoActionPerformed
+
+    private void listaClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listaClienteActionPerformed
+        povoarOrcamento();
+    }//GEN-LAST:event_listaClienteActionPerformed
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -520,12 +567,12 @@ public class ManterItemDoOrcamento extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JComboBox<Cliente> listaCliente;
-    private javax.swing.JComboBox<String> listaDente;
+    private javax.swing.JComboBox listaDente;
     private javax.swing.JComboBox<Orcamento> listaOrcamento;
     private javax.swing.JTextField tfCodigo;
     private javax.swing.JTextField tfOperacao;
     private javax.swing.JTextField tfPesquisar;
     private javax.swing.JTextField tfServico;
-    private javax.swing.JFormattedTextField tfValor;
+    private javax.swing.JTextField tfValor;
     // End of variables declaration//GEN-END:variables
 }

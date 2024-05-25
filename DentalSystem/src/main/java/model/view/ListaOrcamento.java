@@ -33,7 +33,7 @@ public class ListaOrcamento extends javax.swing.JInternalFrame {
         btAtualizar = new javax.swing.JButton();
 
         setClosable(true);
-        setMaximizable(true);
+        setResizable(true);
 
         tabela.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

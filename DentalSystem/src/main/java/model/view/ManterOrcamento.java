@@ -1,13 +1,12 @@
 package model.view;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JButton;
-import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import javax.swing.text.MaskFormatter;
 import model.controller.OrcamentoController;
 import model.dao.DaoFactory;
 import model.entities.Cliente;
@@ -40,6 +39,10 @@ public class ManterOrcamento extends javax.swing.JInternalFrame {
     
     public JButton getBtConfirmar() {
         return btConfirmar;
+    }
+
+    public JButton getBtValorTotal() {
+        return btValorTotal;
     }
 
     public JTextField getTfOperacao() {
@@ -92,10 +95,9 @@ public class ManterOrcamento extends javax.swing.JInternalFrame {
         jLabel10 = new javax.swing.JLabel();
         tfAgendamento = new javax.swing.JFormattedTextField();
         btValorTotal = new javax.swing.JButton();
+        tfValorTotal = new javax.swing.JTextField();
 
         setClosable(true);
-        setMaximizable(true);
-        setResizable(true);
         setTitle("Manter Orcamento");
         setName(""); // NOI18N
         setPreferredSize(new java.awt.Dimension(759, 332));
@@ -225,7 +227,14 @@ public class ManterOrcamento extends javax.swing.JInternalFrame {
 
         tfAgendamento.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT))));
 
-        btValorTotal.setText("jButton1");
+        btValorTotal.setText("Valor total orçamento");
+        btValorTotal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                aoClicarValorTotal(evt);
+            }
+        });
+
+        tfValorTotal.setEditable(false);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -257,10 +266,15 @@ public class ManterOrcamento extends javax.swing.JInternalFrame {
                                     .addComponent(tfPlano, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(tfRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(tfAgendamento)
-                            .addComponent(btValorTotal, javax.swing.GroupLayout.DEFAULT_SIZE, 197, Short.MAX_VALUE)
-                            .addComponent(listaCliente, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(tfAgendamento)
+                                .addComponent(listaCliente, 0, 197, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(tfValorTotal)
+                                    .addComponent(btValorTotal, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE))
+                                .addGap(14, 14, 14))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(17, 17, 17)
                         .addComponent(btAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -289,30 +303,32 @@ public class ManterOrcamento extends javax.swing.JInternalFrame {
                     .addComponent(tfRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel10)
                     .addComponent(tfAgendamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(tfPlano, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel3)
+                                    .addComponent(tfPlano, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(30, 30, 30)
                                 .addComponent(jLabel4))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(tfObs, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGap(40, 40, 40)
+                                .addComponent(tfObs, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addComponent(btValorTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btListar, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btInserir, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btConfirmar, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(17, 17, 17))
+                        .addComponent(tfValorTotal, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btValorTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btListar, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btInserir, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btConfirmar, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -330,7 +346,7 @@ public class ManterOrcamento extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -354,6 +370,7 @@ public class ManterOrcamento extends javax.swing.JInternalFrame {
 
             btExcluir.setEnabled(true);
             btAlterar.setEnabled(true);
+            btValorTotal.setEnabled(true);
             btConfirmar.setEnabled(false);
             this.operacao = Operacao.BUSCAR;
             tfOperacao.setText(this.operacao.name());
@@ -378,6 +395,7 @@ public class ManterOrcamento extends javax.swing.JInternalFrame {
             this.aoClicarConfirmar(evt);
             btAlterar.setEnabled(false);
             btExcluir.setEnabled(false);
+            btValorTotal.setEnabled(false);
         }
         else {
             tfPesquisar.requestFocus();
@@ -403,6 +421,8 @@ public class ManterOrcamento extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(null, "Operação Concluída com Sucesso", "Inserção", JOptionPane.INFORMATION_MESSAGE);
                 this.operacao = Operacao.INATIVO;
                 tfOperacao.setText(this.operacao.name());
+                tfValorTotal.setText("");
+                btValorTotal.setEnabled(false);
                 btConfirmar.setEnabled(false);
             }
             catch (Exception e) {
@@ -481,6 +501,7 @@ public class ManterOrcamento extends javax.swing.JInternalFrame {
 
     private void aoClicarAlterar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aoClicarAlterar
         btConfirmar.setEnabled(true);
+        btValorTotal.setEnabled(false);
         this.operacao = Operacao.ALTERAR;
         tfOperacao.setText(this.operacao.name());
     }//GEN-LAST:event_aoClicarAlterar
@@ -491,8 +512,10 @@ public class ManterOrcamento extends javax.swing.JInternalFrame {
         tfAgendamento.setText("");
         tfPlano.setText("");
         tfObs.setText("");
+        tfValorTotal.setText("");
         btExcluir.setEnabled(false);
         btAlterar.setEnabled(false);
+        btValorTotal.setEnabled(false);
         btConfirmar.setEnabled(true);
         this.operacao = Operacao.INSERIR;
         tfOperacao.setText(this.operacao.name());
@@ -513,6 +536,20 @@ public class ManterOrcamento extends javax.swing.JInternalFrame {
     private void tfRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfRegistroActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tfRegistroActionPerformed
+
+    private void aoClicarValorTotal(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aoClicarValorTotal
+        try {
+            OrcamentoController orcamentoController = DaoFactory.criarOrcamentoController();
+            
+            BigDecimal valorTotal = orcamentoController.exibirValorTotal(Integer.parseInt(tfPesquisar.getText()));
+            tfValorTotal.setText(valorTotal.toString());
+        }
+        catch (Exception e)
+        {
+            JOptionPane.showMessageDialog(null,"Não há itens neste orçamento!","Erro",JOptionPane.ERROR_MESSAGE);
+            tfPesquisar.requestFocus();
+        }
+    }//GEN-LAST:event_aoClicarValorTotal
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -541,6 +578,7 @@ public class ManterOrcamento extends javax.swing.JInternalFrame {
     private javax.swing.JTextField tfPesquisar;
     private javax.swing.JTextField tfPlano;
     private javax.swing.JFormattedTextField tfRegistro;
+    private javax.swing.JTextField tfValorTotal;
     // End of variables declaration//GEN-END:variables
 
 }
