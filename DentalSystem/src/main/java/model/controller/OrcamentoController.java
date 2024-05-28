@@ -2,17 +2,17 @@ package model.controller;
 
 import db.BD;
 import db.ExcecaoBd;
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import model.dao.OrcamentoDao;
 import model.entities.Cliente;
+import model.entities.ItemDoOrcamento;
 import model.entities.Orcamento;
 
 public class OrcamentoController implements OrcamentoDao {
@@ -91,15 +91,17 @@ public class OrcamentoController implements OrcamentoDao {
     @Override
     public void deletarPorId(Orcamento orcamento) {
         PreparedStatement st = null;
+        if (orcamento == null) {
+            throw new ExcecaoBd("O valor passado não pode ser nulo");
+        }
         try {
             st = conn.prepareStatement("DELETE FROM orcamento WHERE id_orcamento = ?");
 
             st.setInt(1, orcamento.getIdOrcamento());
-
             st.executeUpdate();
         }
         catch (SQLException e) {
-            throw new ExcecaoBd(e.getMessage());
+            throw new ExcecaoBd("Erro ao excluir dados: " + e.getMessage());
         }
         finally {
             BD.closeStatement(st);
@@ -112,7 +114,7 @@ public class OrcamentoController implements OrcamentoDao {
         ResultSet rs = null;
         try {
             st = conn.prepareStatement(
-                    "SELECT c.nome, o.fk_id_cliente as id_cliente, "
+                    "SELECT c.nome, o.fk_id_cliente as id_cliente, c.endereco, c.uf, c.telefone, c.documento, c.email, "
                     + "o.id_orcamento, o.data_registro, o.data_agendamento, o.plano, o.observacao "
                     + "FROM orcamento o JOIN cliente c "
                     + "ON o.fk_id_cliente = c.id_cliente "
@@ -121,10 +123,7 @@ public class OrcamentoController implements OrcamentoDao {
             st.setInt(1, id);
             rs = st.executeQuery();
             if (rs.next()) {
-                Cliente c = new Cliente();
-                c.setIdCliente(rs.getInt("id_cliente"));
-                c.setNomeCliente(rs.getString("nome"));
-                
+                Cliente c = instanciarCliente(rs);             
                 Orcamento o = instanciarOrcamento(rs, c);
                 return o;
             }
@@ -145,7 +144,7 @@ public class OrcamentoController implements OrcamentoDao {
         ResultSet rs = null;
         try {
             st = conn.prepareStatement(
-                    "SELECT orcamento.*, cliente.id_cliente FROM orcamento "
+                    "SELECT orcamento.*, cliente.* FROM orcamento "
                     + "JOIN cliente ON cliente.id_cliente = orcamento.fk_id_cliente "
                     + "ORDER BY orcamento.id_orcamento");
             
@@ -153,9 +152,7 @@ public class OrcamentoController implements OrcamentoDao {
             
             List<Orcamento> list = new ArrayList<>();
             while (rs.next()) {
-                Cliente c = new Cliente();
-                c.setIdCliente(rs.getInt("id_cliente"));
-                
+                Cliente c = instanciarCliente(rs);
                 Orcamento o = instanciarOrcamento(rs, c);
                 list.add(o);
             }
@@ -171,17 +168,17 @@ public class OrcamentoController implements OrcamentoDao {
     }
     
     @Override
-    public List<Orcamento> buscarPorCliente(Cliente c) {
+    public List<Orcamento> buscarPorCliente(Integer id) {
         PreparedStatement st = null;
         ResultSet rs = null;
         try {
             st = conn.prepareStatement(
                     "SELECT cliente.nome, orcamento.* FROM orcamento "
                     + "JOIN cliente ON cliente.id_cliente = orcamento.fk_id_cliente "
-                    + "WHERE cliente.nome LIKE ? "
-                    + "ORDER BY cliente.nome");
+                    + "WHERE fk_id_cliente = ? "
+                    + "ORDER BY fk_id_cliente");
             
-            st.setString(1, "%" + c.getNomeCliente() + "%");
+            st.setInt(1, id);
             
             rs = st.executeQuery();
             List<Orcamento> list = new ArrayList<>();
@@ -202,8 +199,84 @@ public class OrcamentoController implements OrcamentoDao {
             BD.closeResultSet(rs);
         }
     }
+    
+    @Override
+    public List buscarTodosClientes() {
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        try {
+            st = conn.prepareStatement("SELECT * FROM cliente");
+            rs = st.executeQuery();
+            List<Cliente> list = new ArrayList<>();
+            while (rs.next()) {
+                Cliente c = instanciarCliente(rs);
+                list.add(c);
+            }
+            return list;
+        }
+        catch (SQLException e) {
+            throw new ExcecaoBd(e.getMessage());
+        }
+        finally {
+            BD.closeStatement(st);
+            BD.closeResultSet(rs);
+        }
+    }
+    
+    public List buscarTodosOrcamentos() {
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        try {
+            st = conn.prepareStatement("SELECT orcamento.*, id_cliente FROM orcamento "
+                                       + "JOIN cliente ON cliente.id_cliente = orcamento.fk_id_cliente");
+            rs = st.executeQuery();
+            List<Orcamento> list = new ArrayList<>();
+            while (rs.next()) {
+                Cliente c = new Cliente();
+                
+                c.setIdCliente(rs.getInt("id_cliente"));
+                Orcamento orcamento = instanciarOrcamento(rs, c);
+                list.add(orcamento);
+            }
+            return list;
+        }
+        catch (SQLException e) {
+            throw new ExcecaoBd(e.getMessage());
+        }
+        finally {
+            BD.closeStatement(st);
+            BD.closeResultSet(rs);
+        }
+    }
+    
+    public BigDecimal exibirValorTotal(Integer id) {
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        try {
+            st = conn.prepareStatement(
+                "SELECT SUM(valor) "
+                + "FROM item_do_orcamento "
+                + "WHERE fk_id_orcamento = ?");
 
-     // Método para instanciar cliente e não deixar o código verboso
+            st.setInt(1, id);
+            rs = st.executeQuery();
+
+            if (rs.next()) {
+                BigDecimal valor = rs.getBigDecimal(1);
+                return valor;
+            }
+            return null;
+        }
+        catch (SQLException e) {
+            throw new ExcecaoBd((e.getMessage()));
+        }
+        finally {
+            BD.closeStatement(st);
+            BD.closeResultSet(rs);
+        }
+    }
+
+    // Método para instanciar cliente e não deixar o código verboso
     private Cliente instanciarCliente(ResultSet rs) throws SQLException {
         Cliente cliente = new Cliente();
         cliente.setIdCliente(rs.getInt("id_cliente"));
@@ -226,5 +299,16 @@ public class OrcamentoController implements OrcamentoDao {
         o.setCliente(c);
         o.setObservacao(rs.getString("observacao"));
         return o;
+    }
+    
+        // Método para instanciar item do orçamento e não deixar o código verboso
+    private ItemDoOrcamento instanciarItemDoOrcamento(ResultSet rs, Cliente c, Orcamento o) throws SQLException {
+        ItemDoOrcamento item = new ItemDoOrcamento();
+        item.setIdItemDoOrcamento(rs.getInt("id_item_orcamento"));
+        item.setOrcamento(o);
+        item.setServico(rs.getString("servico"));
+        item.setValor(rs.getBigDecimal("valor"));
+        item.setDente(rs.getString("dente"));
+        return item;
     }
 }

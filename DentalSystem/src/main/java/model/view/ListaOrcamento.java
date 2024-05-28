@@ -2,18 +2,20 @@ package model.view;
 
 import java.util.List;
 import javax.swing.JOptionPane;
-import model.controller.ClienteController;
+import model.controller.OrcamentoController;
 import model.dao.DaoFactory;
-import model.entities.ClienteTableModel;
+import model.entities.OrcamentoTableModel;
 
-public class ListaCliente extends javax.swing.JInternalFrame {
+public class ListaOrcamento extends javax.swing.JInternalFrame {
 
-    public ClienteTableModel ctm;
-    /** Creates new form ListaCliente */
-    public ListaCliente() {
+    public OrcamentoTableModel ctm;
+    /**
+     * Creates new form ListaOrcamento
+     */
+    public ListaOrcamento() {
         initComponents();
         
-        ctm = new ClienteTableModel();
+        ctm = new OrcamentoTableModel();
         tabela.setModel(ctm);
     }
 
@@ -35,22 +37,16 @@ public class ListaCliente extends javax.swing.JInternalFrame {
 
         tabela.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "ID", "Nome", "Endereço", "UF", "Telefone", "Documento", "Email"
+                "ID", "Cliente", "Data registro", "Data agendamento", "Plano", "Observação"
             }
         ));
-        tabela.setName(""); // NOI18N
-        tabela.setShowVerticalLines(true);
         jScrollPane1.setViewportView(tabela);
-        if (tabela.getColumnModel().getColumnCount() > 0) {
-            tabela.getColumnModel().getColumn(0).setPreferredWidth(1);
-            tabela.getColumnModel().getColumn(3).setPreferredWidth(1);
-        }
 
         btAtualizar.setText("Atualizar");
         btAtualizar.addActionListener(new java.awt.event.ActionListener() {
@@ -64,23 +60,22 @@ public class ListaCliente extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 856, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(369, 369, 369)
-                        .addComponent(btAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 692, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(280, 280, 280))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(61, 61, 61)
-                .addComponent(btAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(114, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(34, 34, 34)
+                .addComponent(btAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(48, Short.MAX_VALUE))
         );
 
         pack();
@@ -88,15 +83,15 @@ public class ListaCliente extends javax.swing.JInternalFrame {
 
     private void aoClicarAtualizar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aoClicarAtualizar
         try {
-            ClienteController ct = DaoFactory.criarClienteController();
+            OrcamentoController ot = DaoFactory.criarOrcamentoController();
             
-            List clientes = ct.buscarTodos();
+            List orcamentos = ot.buscarTodos();
         
-            ctm.setClientes(clientes);
+            ctm.setOrcamentos(orcamentos);
             tabela.revalidate(); 
         }
         catch (Exception e) {
-            JOptionPane.showMessageDialog(null,"Houve um erro na exclus�o","Exclus�o",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null,"Houve um erro na atualização","Atualização",JOptionPane.ERROR_MESSAGE);
         }  
     }//GEN-LAST:event_aoClicarAtualizar
 

@@ -1,7 +1,8 @@
 package model.view;
 
-import java.awt.BorderLayout;
 import javax.swing.JDesktopPane;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import model.entities.enums.Operacao;
 
 public class Menu extends javax.swing.JFrame {
@@ -18,7 +19,7 @@ public class Menu extends javax.swing.JFrame {
     public JDesktopPane getDesktop() {
         return desktop;
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -35,7 +36,9 @@ public class Menu extends javax.swing.JFrame {
         barraCliente = new javax.swing.JMenu();
         CadastrarCliente = new javax.swing.JMenuItem();
         barraOrcamento = new javax.swing.JMenu();
+        ManterOrcamento = new javax.swing.JMenuItem();
         barraItemDoOrcamento = new javax.swing.JMenu();
+        ManterItemOrcamento = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Menu");
@@ -82,9 +85,29 @@ public class Menu extends javax.swing.JFrame {
         menu.add(barraCliente);
 
         barraOrcamento.setText("Orcamento");
+
+        ManterOrcamento.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        ManterOrcamento.setText("Manter Orcamento");
+        ManterOrcamento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                abrirOrcamento(evt);
+            }
+        });
+        barraOrcamento.add(ManterOrcamento);
+
         menu.add(barraOrcamento);
 
         barraItemDoOrcamento.setText("Item Orcamento");
+
+        ManterItemOrcamento.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F5, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        ManterItemOrcamento.setText("Manter Item Orcamento");
+        ManterItemOrcamento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                abrirItemOrcamento(evt);
+            }
+        });
+        barraItemDoOrcamento.add(ManterItemOrcamento);
+
         menu.add(barraItemDoOrcamento);
 
         setJMenuBar(menu);
@@ -117,43 +140,53 @@ public class Menu extends javax.swing.JFrame {
         tela.getTfOperacao().setText(operacao.name());    
     }//GEN-LAST:event_abrirCliente
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void abrirOrcamento(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_abrirOrcamento
+        ManterOrcamento tela = new ManterOrcamento();
+        Operacao operacao = Operacao.INATIVO;
+        desktop.add(tela);
+        tela.setVisible(true);
+        tela.getBtExcluir().setEnabled(false);
+        tela.getBtAlterar().setEnabled(false);
+        tela.getBtConfirmar().setEnabled(false);
+        tela.getBtValorTotal().setEnabled(false);
+        tela.getTfOperacao().setText(operacao.name());
+    }//GEN-LAST:event_abrirOrcamento
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Menu().setVisible(true);
+    private void abrirItemOrcamento(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_abrirItemOrcamento
+        ManterItemDoOrcamento tela = new ManterItemDoOrcamento();
+        Operacao operacao = Operacao.INATIVO;
+        desktop.add(tela);
+        tela.setVisible(true);
+        tela.getBtExcluir().setEnabled(false);
+        tela.getBtAlterar().setEnabled(false);
+        tela.getBtConfirmar().setEnabled(false);
+        tela.getTfOperacao().setText(operacao.name());
+    }//GEN-LAST:event_abrirItemOrcamento
+    
+    // Responsável por setar o LAF como Nimbus
+    public static void setNimbusLAF() {
+        try {
+          for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+            if ("Nimbus".equals(info.getName())) {
+              UIManager.setLookAndFeel(info.getClassName());
+              break;
             }
-        });
+          }
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+          ex.printStackTrace();
+        }
+    }
+    
+    // Executável
+    public static void main(String args[]) {
+        setNimbusLAF();
+        java.awt.EventQueue.invokeLater(() -> new Menu().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem CadastrarCliente;
+    private javax.swing.JMenuItem ManterItemOrcamento;
+    private javax.swing.JMenuItem ManterOrcamento;
     private javax.swing.JMenu barraCliente;
     private javax.swing.JMenu barraItemDoOrcamento;
     private javax.swing.JMenu barraOrcamento;

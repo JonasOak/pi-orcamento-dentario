@@ -116,6 +116,11 @@ public class Cliente {
                + "\n" + email;
     } 
     
+    @Override
+    public String toString() {
+        return nomeCliente;
+    }
+    
     public String toStringBuscaDados() {
         return 
                 + idCliente 
