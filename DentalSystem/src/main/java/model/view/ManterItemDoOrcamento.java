@@ -1,6 +1,5 @@
 package model.view;
 
-import java.awt.event.ActionListener;
 import java.math.BigDecimal;
 import java.util.List;
 import javax.swing.JButton;
@@ -88,10 +87,8 @@ public class ManterItemDoOrcamento extends javax.swing.JInternalFrame {
             List<Cliente> lista = dao.buscarTodosClientes();
             for(Cliente c : lista){
                 listaCliente.addItem(c);
-            }
-            
-            listaCliente.addActionListener(this::listaClienteActionPerformed);
-            
+            }            
+            listaCliente.addActionListener(this::listaClienteActionPerformed);        
         } catch (Exception ex) {
             ex.getMessage();
         }    
@@ -103,7 +100,7 @@ public class ManterItemDoOrcamento extends javax.swing.JInternalFrame {
             Cliente cliente = (Cliente) listaCliente.getSelectedItem();
             
             if (cliente != null) {
-                List<Orcamento> lista = dao.buscarPorCliente(cliente.getIdCliente());
+                List<Orcamento> lista = dao.buscarPorCliente(cliente);
                 listaOrcamento.removeAllItems();
                 for (Orcamento o : lista) {
                     listaOrcamento.addItem(o);
@@ -487,7 +484,7 @@ public class ManterItemDoOrcamento extends javax.swing.JInternalFrame {
                 itemDoOrcamento.setDente((String)listaDente.getSelectedItem());
                 itemDoOrcamento.setValor(valor);
 
-                itemDoOrcamentoController.deletarPorId(itemDoOrcamento);
+                itemDoOrcamentoController.deletarPorId(itemDoOrcamento.getIdItemDoOrcamento());
                 JOptionPane.showMessageDialog(null,"Operação Concluída com Sucesso","Exclusão",JOptionPane.INFORMATION_MESSAGE);
                 this.operacao = Operacao.INATIVO;
                 tfOperacao.setText(this.operacao.name());

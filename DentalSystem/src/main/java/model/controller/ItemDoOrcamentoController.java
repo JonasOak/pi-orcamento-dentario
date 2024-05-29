@@ -86,15 +86,15 @@ public class ItemDoOrcamentoController implements ItemDoOrcamentoDAO {
     }
 
     @Override
-    public void deletarPorId(ItemDoOrcamento item) {
+    public void deletarPorId(Integer id) {
         PreparedStatement st = null;
-        if (item == null) {
+        if (id == null) {
             throw new ExcecaoBd("O valor passado não pode ser nulo");
         }
         try {
             st = conn.prepareStatement("DELETE FROM item_do_orcamento WHERE id_item_orcamento = ?");
 
-            st.setInt(1, item.getIdItemDoOrcamento());
+            st.setInt(1, id);
             st.executeUpdate();
         }
         catch (SQLException e) {
@@ -227,6 +227,5 @@ public class ItemDoOrcamentoController implements ItemDoOrcamentoDAO {
         item.setValor(rs.getBigDecimal("valor"));
         item.setDente(rs.getString("dente"));
         return item;
-    }
-    
+    }   
 }

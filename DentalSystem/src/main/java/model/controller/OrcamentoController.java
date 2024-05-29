@@ -89,15 +89,15 @@ public class OrcamentoController implements OrcamentoDao {
     }
 
     @Override
-    public void deletarPorId(Orcamento orcamento) {
+    public void excluir(Integer id) {
         PreparedStatement st = null;
-        if (orcamento == null) {
+        if (id == null) {
             throw new ExcecaoBd("O valor passado não pode ser nulo");
         }
         try {
             st = conn.prepareStatement("DELETE FROM orcamento WHERE id_orcamento = ?");
 
-            st.setInt(1, orcamento.getIdOrcamento());
+            st.setInt(1, id);
             st.executeUpdate();
         }
         catch (SQLException e) {
@@ -168,7 +168,7 @@ public class OrcamentoController implements OrcamentoDao {
     }
     
     @Override
-    public List<Orcamento> buscarPorCliente(Integer id) {
+    public List<Orcamento> buscarPorCliente(Cliente c) {
         PreparedStatement st = null;
         ResultSet rs = null;
         try {
@@ -178,7 +178,7 @@ public class OrcamentoController implements OrcamentoDao {
                     + "WHERE fk_id_cliente = ? "
                     + "ORDER BY fk_id_cliente");
             
-            st.setInt(1, id);
+            st.setInt(1, c.getIdCliente());
             
             rs = st.executeQuery();
             List<Orcamento> list = new ArrayList<>();
