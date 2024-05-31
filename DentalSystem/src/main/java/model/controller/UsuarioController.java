@@ -19,6 +19,28 @@ public class UsuarioController implements UsuarioDao {
     public UsuarioController(Connection conn) {
         this.conn = conn;
     }
+    
+    public boolean login(String login, String senha) {
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        try {
+            st = conn.prepareStatement(
+                    "SELECT login, senha FROM usuario "
+                    + "WHERE login = ? and senha = ?"
+            );
+            st.setString(1, login);
+            st.setString(2, senha);
+            rs = st.executeQuery();
+            
+            return !!rs.next();
+        }
+        catch (SQLException e) {
+            throw new ExcecaoBd(e.getMessage());
+        }
+        finally {
+            BD.closeStatement(st);
+        }
+    }
 
     @Override
     public void inserir(Usuario usuario) {
