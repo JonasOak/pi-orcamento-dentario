@@ -89,7 +89,7 @@ public class OrcamentoController implements OrcamentoDao {
     }
 
     @Override
-    public void excluir(Integer id) {
+    public void deletarPorId(Integer id) {
         PreparedStatement st = null;
         if (id == null) {
             throw new ExcecaoBd("O valor passado não pode ser nulo");

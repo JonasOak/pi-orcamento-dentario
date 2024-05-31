@@ -88,15 +88,15 @@ public class ClienteController implements ClienteDao {
     }
 
     @Override
-    public void excluir(Cliente cliente) {
+    public void deletarPorId(Integer id) {
         PreparedStatement st = null;
-        if (cliente == null) {
+        if (id == null) {
             throw new ExcecaoBd("O valor passado não pode ser nulo");
         }
         try {
             st = conn.prepareStatement("DELETE FROM cliente WHERE id_cliente = ?");
 
-            st.setInt(1, cliente.getIdCliente());
+            st.setInt(1, id);
             st.executeUpdate();
         }
         catch (SQLException e) {
