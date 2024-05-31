@@ -153,6 +153,7 @@ public class ManterItemDoOrcamento extends javax.swing.JInternalFrame {
         tfValor = new javax.swing.JTextField();
 
         setClosable(true);
+        setTitle("Manter Item do Orcamento");
 
         jLabel1.setText("Digite o código:");
 

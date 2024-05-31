@@ -32,6 +32,7 @@ public class ListaCliente extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setResizable(true);
+        setTitle("Lista Cliente");
 
         tabela.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
