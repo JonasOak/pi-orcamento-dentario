@@ -33,8 +33,9 @@ public class Menu extends javax.swing.JFrame {
         desktop = new javax.swing.JDesktopPane();
         menu = new javax.swing.JMenuBar();
         barraUsuario = new javax.swing.JMenu();
+        ManterUsuario = new javax.swing.JMenuItem();
         barraCliente = new javax.swing.JMenu();
-        CadastrarCliente = new javax.swing.JMenuItem();
+        ManterCliente = new javax.swing.JMenuItem();
         barraOrcamento = new javax.swing.JMenu();
         ManterOrcamento = new javax.swing.JMenuItem();
         barraItemDoOrcamento = new javax.swing.JMenu();
@@ -69,18 +70,27 @@ public class Menu extends javax.swing.JFrame {
         );
 
         barraUsuario.setText("Usuario");
+
+        ManterUsuario.setText("Manter Usuario");
+        ManterUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                abrirUsuario(evt);
+            }
+        });
+        barraUsuario.add(ManterUsuario);
+
         menu.add(barraUsuario);
 
         barraCliente.setText("Cliente");
 
-        CadastrarCliente.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F3, java.awt.event.InputEvent.CTRL_DOWN_MASK));
-        CadastrarCliente.setText("Manter Cliente");
-        CadastrarCliente.addActionListener(new java.awt.event.ActionListener() {
+        ManterCliente.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F3, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        ManterCliente.setText("Manter Cliente");
+        ManterCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 abrirCliente(evt);
             }
         });
-        barraCliente.add(CadastrarCliente);
+        barraCliente.add(ManterCliente);
 
         menu.add(barraCliente);
 
@@ -162,6 +172,17 @@ public class Menu extends javax.swing.JFrame {
         tela.getBtConfirmar().setEnabled(false);
         tela.getTfOperacao().setText(operacao.name());
     }//GEN-LAST:event_abrirItemOrcamento
+
+    private void abrirUsuario(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_abrirUsuario
+        ManterUsuario tela = new ManterUsuario();
+        Operacao operacao = Operacao.INATIVO;
+        desktop.add(tela);
+        tela.setVisible(true);
+        tela.getBtExcluir().setEnabled(false);
+        tela.getBtAlterar().setEnabled(false);
+        tela.getBtConfirmar().setEnabled(false);
+        tela.getTfOperacao().setText(operacao.name());
+    }//GEN-LAST:event_abrirUsuario
     
     // Responsável por setar o LAF como Nimbus
     public static void setNimbusLAF() {
@@ -184,9 +205,10 @@ public class Menu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem CadastrarCliente;
+    private javax.swing.JMenuItem ManterCliente;
     private javax.swing.JMenuItem ManterItemOrcamento;
     private javax.swing.JMenuItem ManterOrcamento;
+    private javax.swing.JMenuItem ManterUsuario;
     private javax.swing.JMenu barraCliente;
     private javax.swing.JMenu barraItemDoOrcamento;
     private javax.swing.JMenu barraOrcamento;

@@ -446,7 +446,7 @@ public class ManterCliente extends javax.swing.JInternalFrame {
                     cliente.setTelefone(tfTel.getText());
                     cliente.setEmail(tfEmail.getText());
                     
-                    clienteController.excluir(cliente);
+                    clienteController.deletarPorId(cliente.getIdCliente());
                     JOptionPane.showMessageDialog(null,"Operação Concluída com Sucesso","Exclusão",JOptionPane.INFORMATION_MESSAGE);
                     this.operacao = Operacao.INATIVO;
                     tfOperacao.setText(this.operacao.name());

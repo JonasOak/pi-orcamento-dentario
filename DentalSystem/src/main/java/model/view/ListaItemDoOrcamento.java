@@ -34,6 +34,7 @@ public class ListaItemDoOrcamento extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setResizable(true);
+        setTitle("Lista Item do Orcamento");
 
         tabela.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

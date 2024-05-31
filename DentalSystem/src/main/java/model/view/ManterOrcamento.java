@@ -471,7 +471,7 @@ public class ManterOrcamento extends javax.swing.JInternalFrame {
                 orcamento.setPlano(tfPlano.getText());
                 orcamento.setObservacao(tfObs.getText());
 
-                orcamentoController.excluir(orcamento.getIdOrcamento());
+                orcamentoController.deletarPorId(orcamento.getIdOrcamento());
                 JOptionPane.showMessageDialog(null,"Operação Concluída com Sucesso","Exclusão",JOptionPane.INFORMATION_MESSAGE);
                 this.operacao = Operacao.INATIVO;
                 tfOperacao.setText(this.operacao.name());

@@ -1,21 +1,31 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
+ */
 package model.view;
 
 import java.util.List;
 import javax.swing.JOptionPane;
-import model.controller.OrcamentoController;
+import model.controller.UsuarioController;
 import model.dao.DaoFactory;
-import model.entities.OrcamentoTableModel;
+import model.entities.ClienteTableModel;
+import model.entities.UsuarioTableModel;
 
-public class ListaOrcamento extends javax.swing.JInternalFrame {
+/**
+ *
+ * @author jonas
+ */
+public class ListaUsuario extends javax.swing.JInternalFrame {
 
-    public OrcamentoTableModel ctm;
+    public UsuarioTableModel ctm;
+    
     /**
-     * Creates new form ListaOrcamento
+     * Creates new form ListaUsuario
      */
-    public ListaOrcamento() {
+    public ListaUsuario() {
         initComponents();
         
-        ctm = new OrcamentoTableModel();
+        ctm = new UsuarioTableModel();
         tabela.setModel(ctm);
     }
 
@@ -34,17 +44,18 @@ public class ListaOrcamento extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setResizable(true);
-        setTitle("Lista Orcamento");
+        setTitle("Lista Usuario");
+        setToolTipText("");
 
         tabela.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "ID", "Cliente", "Data registro", "Data agendamento", "Plano", "Observação"
+                "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
         jScrollPane1.setViewportView(tabela);
@@ -61,22 +72,23 @@ public class ListaOrcamento extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 692, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(280, 280, 280))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(372, 372, 372)
+                        .addComponent(btAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 869, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34)
-                .addComponent(btAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(48, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(90, 90, 90)
+                .addComponent(btAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(93, Short.MAX_VALUE))
         );
 
         pack();
@@ -84,16 +96,16 @@ public class ListaOrcamento extends javax.swing.JInternalFrame {
 
     private void aoClicarAtualizar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aoClicarAtualizar
         try {
-            OrcamentoController ot = DaoFactory.criarOrcamentoController();
-            
-            List orcamentos = ot.buscarTodos();
-        
-            ctm.setOrcamentos(orcamentos);
-            tabela.revalidate(); 
+            UsuarioController uc = DaoFactory.criarUsuarioController();
+
+            List usuarios = uc.buscarTodos();
+
+            ctm.setUsuarios(usuarios);
+            tabela.revalidate();
         }
         catch (Exception e) {
-            JOptionPane.showMessageDialog(null,"Houve um erro na atualização","Atualização",JOptionPane.ERROR_MESSAGE);
-        }  
+            JOptionPane.showMessageDialog(null,"Houve um erro na exclus�o","Exclus�o",JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_aoClicarAtualizar
 
 
