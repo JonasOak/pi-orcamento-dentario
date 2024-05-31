@@ -317,16 +317,22 @@ public class ManterUsuario extends javax.swing.JInternalFrame {
 
     private void aoClicarExcluir(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aoClicarExcluir
         int resp = JOptionPane.showConfirmDialog(null,"Deseja Excluir o Registro?","Exclusão de Registro",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
-
-        if (resp == 0) {
-            this.operacao = Operacao.EXCLUIR;
-            tfOperacao.setText(this.operacao.name());
-            this.aoClicarConfirmar(evt);
-            btAlterar.setEnabled(false);
-            btExcluir.setEnabled(false);
+        String login = tfLogin.getText();
+        
+        if (!login.equals("admin")) {
+            if (resp == 0) {
+               this.operacao = Operacao.EXCLUIR;
+               tfOperacao.setText(this.operacao.name());
+               this.aoClicarConfirmar(evt);
+               btAlterar.setEnabled(false);
+               btExcluir.setEnabled(false);
+           }
+           else {
+               tfPesquisar.requestFocus();
+           }   
         }
         else {
-            tfPesquisar.requestFocus();
+            JOptionPane.showMessageDialog(null,"Você não pode deletar o ADMINISTRADOR!","ERRO",JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_aoClicarExcluir
 

@@ -1,12 +1,17 @@
 package model.view;
 
 import javax.swing.JDesktopPane;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import model.entities.enums.Operacao;
 
 public class Menu extends javax.swing.JFrame {
-
+    
+    private String usuarioLogado;
+    
     /**
      * Creates new form Menu
      */
@@ -15,11 +20,33 @@ public class Menu extends javax.swing.JFrame {
         setSize(1200, 800);
         setLocation(350, 50);
     }
+    
+    public Menu(String usuarioLogado) {
+        initComponents();
+        this.usuarioLogado = usuarioLogado;
+        autenticar();
+        setSize(1200, 800);
+        setLocation(350, 50);
+    }
+    
+    private void autenticar() {
+        if (!"admin".equals(usuarioLogado)) {
+            barraUsuario.setVisible(false);
+        }
+    }
 
     public JDesktopPane getDesktop() {
         return desktop;
     }
-    
+
+    public JTextField getTfloginAtivo() {
+        return tfloginAtivo;
+    }
+
+    public JMenuItem getManterUsuario() {
+        return ManterUsuario;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -31,6 +58,7 @@ public class Menu extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         desktop = new javax.swing.JDesktopPane();
+        tfloginAtivo = new javax.swing.JTextField();
         menu = new javax.swing.JMenuBar();
         barraUsuario = new javax.swing.JMenu();
         ManterUsuario = new javax.swing.JMenuItem();
@@ -47,15 +75,25 @@ public class Menu extends javax.swing.JFrame {
 
         desktop.setPreferredSize(new java.awt.Dimension(1920, 1080));
 
+        tfloginAtivo.setEditable(false);
+
+        desktop.setLayer(tfloginAtivo, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
         javax.swing.GroupLayout desktopLayout = new javax.swing.GroupLayout(desktop);
         desktop.setLayout(desktopLayout);
         desktopLayout.setHorizontalGroup(
             desktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1920, Short.MAX_VALUE)
+            .addGroup(desktopLayout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addComponent(tfloginAtivo, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(1803, Short.MAX_VALUE))
         );
         desktopLayout.setVerticalGroup(
             desktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1080, Short.MAX_VALUE)
+            .addGroup(desktopLayout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addComponent(tfloginAtivo, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(1035, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -174,14 +212,29 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_abrirItemOrcamento
 
     private void abrirUsuario(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_abrirUsuario
-        ManterUsuario tela = new ManterUsuario();
-        Operacao operacao = Operacao.INATIVO;
-        desktop.add(tela);
-        tela.setVisible(true);
-        tela.getBtExcluir().setEnabled(false);
-        tela.getBtAlterar().setEnabled(false);
-        tela.getBtConfirmar().setEnabled(false);
-        tela.getTfOperacao().setText(operacao.name());
+        try {
+            String usuario = this.usuarioLogado;
+            
+            if (usuario.equals("admin")) {
+                ManterUsuario tela = new ManterUsuario();
+                Operacao operacao = Operacao.INATIVO;
+                desktop.add(tela);
+                tela.setVisible(true);
+                tela.getBtExcluir().setEnabled(false);
+                tela.getBtAlterar().setEnabled(false);
+                tela.getBtConfirmar().setEnabled(false);
+                tela.getTfOperacao().setText(operacao.name()); 
+            }
+            else {
+                JOptionPane.showMessageDialog(null,"Você não tem permissão para acessar essa área!","ERRO",JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Algo inesperado ocorreu!","ERRO",JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
+        
+        
     }//GEN-LAST:event_abrirUsuario
     
     // Responsável por setar o LAF como Nimbus
@@ -216,5 +269,6 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JDesktopPane desktop;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JMenuBar menu;
+    private javax.swing.JTextField tfloginAtivo;
     // End of variables declaration//GEN-END:variables
 }

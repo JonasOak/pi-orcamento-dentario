@@ -1,20 +1,11 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
- */
 package model.view;
 
 import java.util.List;
 import javax.swing.JOptionPane;
 import model.controller.UsuarioController;
 import model.dao.DaoFactory;
-import model.entities.ClienteTableModel;
 import model.entities.UsuarioTableModel;
 
-/**
- *
- * @author jonas
- */
 public class ListaUsuario extends javax.swing.JInternalFrame {
 
     public UsuarioTableModel ctm;
@@ -49,13 +40,13 @@ public class ListaUsuario extends javax.swing.JInternalFrame {
 
         tabela.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "ID", "Nome", "Cargo", "Login", "Senha", "Email"
             }
         ));
         jScrollPane1.setViewportView(tabela);
