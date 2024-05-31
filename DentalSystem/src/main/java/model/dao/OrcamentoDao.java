@@ -8,7 +8,7 @@ public interface OrcamentoDao {
     
     void inserir(Orcamento o);
     void atualizar(Orcamento o);
-    void excluir(Integer id);
+    void deletarPorId(Integer id);
     Orcamento buscarPorId(Integer id);
     List<Orcamento> buscarTodos();
     List<Orcamento> buscarPorCliente(Cliente c);
