@@ -1,11 +1,11 @@
 package application;
 
-import model.view.Menu;
+import model.view.Login;
 
 public class Programa {
     
     public static void main(String args[]) {
-        Menu.setNimbusLAF();
-        java.awt.EventQueue.invokeLater(() -> new Menu().setVisible(true));
+        Login.setNimbusLAF();
+        java.awt.EventQueue.invokeLater(() -> new Login().setVisible(true));
     }
 }

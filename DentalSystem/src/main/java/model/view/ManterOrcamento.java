@@ -1,9 +1,12 @@
 package model.view;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -19,6 +22,7 @@ import static model.entities.enums.Operacao.INSERIR;
 public class ManterOrcamento extends javax.swing.JInternalFrame {
 
     SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+    DecimalFormat df = new DecimalFormat("R$#,##0.00", new DecimalFormatSymbols(new Locale("pt", "BR")));
     private Operacao operacao;
     
     /**
@@ -60,6 +64,16 @@ public class ManterOrcamento extends javax.swing.JInternalFrame {
             ex.getMessage();
         }    
     }
+    
+    private void limparCampos() {
+        tfCodigo.setText("");
+        ftRegistro.setText("");
+        ftAgendamento.setText("");
+        tfPlano.setText("");
+        tfObs.setText("");
+        tfValorTotal.setText("");
+        tfPesquisar.setText("");
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -91,11 +105,11 @@ public class ManterOrcamento extends javax.swing.JInternalFrame {
         btConfirmar = new javax.swing.JButton();
         btExcluir = new javax.swing.JButton();
         listaCliente = new javax.swing.JComboBox<>();
-        tfRegistro = new javax.swing.JFormattedTextField();
         jLabel10 = new javax.swing.JLabel();
-        tfAgendamento = new javax.swing.JFormattedTextField();
         btValorTotal = new javax.swing.JButton();
         tfValorTotal = new javax.swing.JTextField();
+        ftRegistro = new javax.swing.JFormattedTextField();
+        ftAgendamento = new javax.swing.JFormattedTextField();
 
         setClosable(true);
         setTitle("Manter Orcamento");
@@ -148,9 +162,9 @@ public class ManterOrcamento extends javax.swing.JInternalFrame {
 
         jLabel1.setText("Codigo:");
 
-        jLabel2.setText("Data registro:");
+        jLabel2.setText("Data registro:*");
 
-        jLabel3.setText("Plano:");
+        jLabel3.setText("Plano:*");
 
         jLabel4.setText("Observação:");
 
@@ -173,7 +187,7 @@ public class ManterOrcamento extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel6.setText("Cliente:");
+        jLabel6.setText("Cliente:*");
 
         btInserir.setText("Inserir");
         btInserir.addActionListener(new java.awt.event.ActionListener() {
@@ -216,18 +230,9 @@ public class ManterOrcamento extends javax.swing.JInternalFrame {
             }
         });
 
-        tfRegistro.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT))));
-        tfRegistro.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfRegistroActionPerformed(evt);
-            }
-        });
+        jLabel10.setText("Data agendamento:*");
 
-        jLabel10.setText("Data agendamento:");
-
-        tfAgendamento.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT))));
-
-        btValorTotal.setText("Valor total orçamento");
+        btValorTotal.setText("Calcular Orçamento");
         btValorTotal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 aoClicarValorTotal(evt);
@@ -235,6 +240,26 @@ public class ManterOrcamento extends javax.swing.JInternalFrame {
         });
 
         tfValorTotal.setEditable(false);
+        tfValorTotal.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        tfValorTotal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfValorTotalActionPerformed(evt);
+            }
+        });
+
+        try {
+            ftRegistro.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        ftRegistro.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+
+        try {
+            ftAgendamento.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        ftAgendamento.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -255,26 +280,25 @@ public class ManterOrcamento extends javax.swing.JInternalFrame {
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(tfObs, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(tfCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(tfCodigo, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                                            .addComponent(ftRegistro))
                                         .addGap(50, 50, 50)
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabel10)
                                             .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(18, 18, 18)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(tfPlano, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(tfRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(tfPlano, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(tfAgendamento)
-                                .addComponent(listaCliente, 0, 197, Short.MAX_VALUE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(listaCliente, 0, 197, Short.MAX_VALUE)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(tfValorTotal)
                                     .addComponent(btValorTotal, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE))
-                                .addGap(14, 14, 14))))
+                                .addGap(14, 14, 14))
+                            .addComponent(ftAgendamento)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(17, 17, 17)
                         .addComponent(btAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -300,9 +324,9 @@ public class ManterOrcamento extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(tfRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel10)
-                    .addComponent(tfAgendamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(ftRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ftAgendamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -360,8 +384,8 @@ public class ManterOrcamento extends javax.swing.JInternalFrame {
             
             Orcamento orcamento = orcamentoController.buscarPorId(Integer.parseInt(tfPesquisar.getText()));
             tfCodigo.setText(String.valueOf(orcamento.getIdOrcamento()));
-            tfRegistro.setText(formatter.format(orcamento.getDataRegistro()));
-            tfAgendamento.setText(formatter.format(orcamento.getDataAgendamento()));
+            ftRegistro.setText(formatter.format(orcamento.getDataRegistro()));
+            ftAgendamento.setText(formatter.format(orcamento.getDataAgendamento()));
             Cliente c = orcamento.getCliente();
             listaCliente.setSelectedItem(c);
             tfPlano.setText(orcamento.getPlano());
@@ -372,6 +396,7 @@ public class ManterOrcamento extends javax.swing.JInternalFrame {
             btAlterar.setEnabled(true);
             btValorTotal.setEnabled(true);
             btConfirmar.setEnabled(false);
+            tfValorTotal.setText("");
             this.operacao = Operacao.BUSCAR;
             tfOperacao.setText(this.operacao.name());
         }
@@ -408,8 +433,8 @@ public class ManterOrcamento extends javax.swing.JInternalFrame {
             try {
                 OrcamentoController orcamentoController = DaoFactory.criarOrcamentoController();
                 Orcamento orcamento = new Orcamento();
-                Date dataRegistro = formatter.parse(tfRegistro.getText());
-                Date dataAgendamento = formatter.parse(tfAgendamento.getText());
+                Date dataRegistro = formatter.parse(ftRegistro.getText());
+                Date dataAgendamento = formatter.parse(ftAgendamento.getText());
                 
                 orcamento.setDataRegistro(dataRegistro);
                 orcamento.setDataAgendamento(dataAgendamento);
@@ -421,7 +446,7 @@ public class ManterOrcamento extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(null, "Operação Concluída com Sucesso", "Inserção", JOptionPane.INFORMATION_MESSAGE);
                 this.operacao = Operacao.INATIVO;
                 tfOperacao.setText(this.operacao.name());
-                tfValorTotal.setText("");
+                limparCampos();
                 btValorTotal.setEnabled(false);
                 btConfirmar.setEnabled(false);
             }
@@ -436,8 +461,8 @@ public class ManterOrcamento extends javax.swing.JInternalFrame {
                 Orcamento orcamento = new Orcamento();
 
                 orcamento.setIdOrcamento(Integer.parseInt(tfCodigo.getText()));
-                Date dataRegistro = formatter.parse(tfRegistro.getText());
-                Date dataAgendamento = formatter.parse(tfAgendamento.getText());
+                Date dataRegistro = formatter.parse(ftRegistro.getText());
+                Date dataAgendamento = formatter.parse(ftAgendamento.getText());
                 
                 orcamento.setDataRegistro(dataRegistro);
                 orcamento.setDataAgendamento(dataAgendamento);
@@ -447,6 +472,7 @@ public class ManterOrcamento extends javax.swing.JInternalFrame {
 
                 orcamentoController.atualizar(orcamento);
                 JOptionPane.showMessageDialog(null,"Operação Concluída com Sucesso","Alteração",JOptionPane.INFORMATION_MESSAGE);
+                limparCampos();
                 this.operacao = Operacao.INATIVO;
                 tfOperacao.setText(this.operacao.name());
                 btConfirmar.setEnabled(false);
@@ -461,8 +487,8 @@ public class ManterOrcamento extends javax.swing.JInternalFrame {
             try {
                 OrcamentoController orcamentoController = DaoFactory.criarOrcamentoController();
                 Orcamento orcamento = new Orcamento();
-                Date dataRegistro = formatter.parse(tfRegistro.getText());
-                Date dataAgendamento = formatter.parse(tfAgendamento.getText());
+                Date dataRegistro = formatter.parse(ftRegistro.getText());
+                Date dataAgendamento = formatter.parse(ftAgendamento.getText());
                 
                 orcamento.setIdOrcamento(Integer.parseInt(tfCodigo.getText()));
                 orcamento.setDataRegistro(dataRegistro);
@@ -477,12 +503,7 @@ public class ManterOrcamento extends javax.swing.JInternalFrame {
                 tfOperacao.setText(this.operacao.name());
                 btConfirmar.setEnabled(false);
 
-                tfCodigo.setText("");
-                tfRegistro.setText("");
-                tfAgendamento.setText("");
-                tfPlano.setText("");
-                tfObs.setText("");
-                tfPesquisar.setText("");
+                limparCampos();
                 tfPesquisar.requestFocus();
             }
             catch (Exception e) {
@@ -507,12 +528,7 @@ public class ManterOrcamento extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_aoClicarAlterar
 
     private void aoClicarInserir(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aoClicarInserir
-        tfCodigo.setText("");
-        tfRegistro.setText("");
-        tfAgendamento.setText("");
-        tfPlano.setText("");
-        tfObs.setText("");
-        tfValorTotal.setText("");
+        limparCampos();
         btExcluir.setEnabled(false);
         btAlterar.setEnabled(false);
         btValorTotal.setEnabled(false);
@@ -533,16 +549,12 @@ public class ManterOrcamento extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_tfCodigoActionPerformed
 
-    private void tfRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfRegistroActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tfRegistroActionPerformed
-
     private void aoClicarValorTotal(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aoClicarValorTotal
         try {
             OrcamentoController orcamentoController = DaoFactory.criarOrcamentoController();
             
             BigDecimal valorTotal = orcamentoController.exibirValorTotal(Integer.parseInt(tfPesquisar.getText()));
-            tfValorTotal.setText(valorTotal.toString());
+            tfValorTotal.setText(df.format(valorTotal));
         }
         catch (Exception e)
         {
@@ -551,6 +563,10 @@ public class ManterOrcamento extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_aoClicarValorTotal
 
+    private void tfValorTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfValorTotalActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfValorTotalActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btAlterar;
     private javax.swing.JButton btConfirmar;
@@ -558,6 +574,8 @@ public class ManterOrcamento extends javax.swing.JInternalFrame {
     private javax.swing.JButton btInserir;
     private javax.swing.JButton btListar;
     private javax.swing.JButton btValorTotal;
+    private javax.swing.JFormattedTextField ftAgendamento;
+    private javax.swing.JFormattedTextField ftRegistro;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -570,13 +588,11 @@ public class ManterOrcamento extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JComboBox<Cliente> listaCliente;
-    private javax.swing.JFormattedTextField tfAgendamento;
     private javax.swing.JTextField tfCodigo;
     private javax.swing.JTextField tfObs;
     private javax.swing.JTextField tfOperacao;
     private javax.swing.JTextField tfPesquisar;
     private javax.swing.JTextField tfPlano;
-    private javax.swing.JFormattedTextField tfRegistro;
     private javax.swing.JTextField tfValorTotal;
     // End of variables declaration//GEN-END:variables
 

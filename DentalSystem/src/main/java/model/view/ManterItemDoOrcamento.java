@@ -1,7 +1,10 @@
 package model.view;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.List;
+import java.util.Locale;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -18,6 +21,7 @@ import static model.entities.enums.Operacao.INSERIR;
 
 public class ManterItemDoOrcamento extends javax.swing.JInternalFrame {
 
+    DecimalFormat df = new DecimalFormat("R$#,##0.00", new DecimalFormatSymbols(new Locale("pt", "BR")));
     private Operacao operacao;
     
     String[] nomesDentes = {
@@ -202,13 +206,14 @@ public class ManterItemDoOrcamento extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jLabel3.setText("Codigo:");
+        jLabel3.setText("Codigo:*");
 
         tfCodigo.setEditable(false);
+        tfCodigo.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
-        jLabel4.setText("Serviço:");
+        jLabel4.setText("Serviço:*");
 
-        jLabel5.setText("Cliente:");
+        jLabel5.setText("Cliente:*");
 
         listaCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -216,7 +221,7 @@ public class ManterItemDoOrcamento extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel6.setText("N° Orçamento:");
+        jLabel6.setText("N° Orçamento:*");
 
         listaOrcamento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -224,9 +229,9 @@ public class ManterItemDoOrcamento extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel7.setText("Dente:");
+        jLabel7.setText("Dente:*");
 
-        jLabel8.setText("Valor:");
+        jLabel8.setText("Valor:*");
 
         btAlterar.setText("Alterar");
         btAlterar.addActionListener(new java.awt.event.ActionListener() {

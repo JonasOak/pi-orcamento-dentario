@@ -147,7 +147,7 @@ public class ManterUsuario extends javax.swing.JInternalFrame {
 
         jLabel5.setText("Senha:*");
 
-        jLabel6.setText("Email:*");
+        jLabel6.setText("Email:");
 
         btAlterar.setText("Alterar");
         btAlterar.addActionListener(new java.awt.event.ActionListener() {

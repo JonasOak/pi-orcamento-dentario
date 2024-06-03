@@ -61,17 +61,17 @@ public class ManterCliente extends javax.swing.JInternalFrame {
         tfNome = new javax.swing.JTextField();
         tfCodigo = new javax.swing.JTextField();
         tfEndereco = new javax.swing.JTextField();
-        tfTel = new javax.swing.JTextField();
         tfEmail = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        tfDocumento = new javax.swing.JTextField();
         tfUF = new javax.swing.JTextField();
         btInserir = new javax.swing.JButton();
         btAlterar = new javax.swing.JButton();
         btListar = new javax.swing.JButton();
         btConfirmar = new javax.swing.JButton();
         btExcluir = new javax.swing.JButton();
+        ftDocumento = new javax.swing.JFormattedTextField();
+        ftTel = new javax.swing.JFormattedTextField();
         jPanel2 = new javax.swing.JPanel();
         tfPesquisar = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
@@ -82,13 +82,13 @@ public class ManterCliente extends javax.swing.JInternalFrame {
         setClosable(true);
         setTitle("Manter Cliente");
 
-        jLabel1.setText("Codigo:");
+        jLabel1.setText("Codigo:*");
 
-        jLabel2.setText("Nome:");
+        jLabel2.setText("Nome:*");
 
-        jLabel3.setText("Endereço:");
+        jLabel3.setText("Telefone:*");
 
-        jLabel4.setText("Telefone:");
+        jLabel4.setText("Endereço:*");
 
         jLabel5.setText("Email:");
 
@@ -99,6 +99,7 @@ public class ManterCliente extends javax.swing.JInternalFrame {
         });
 
         tfCodigo.setEditable(false);
+        tfCodigo.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         tfCodigo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tfCodigoActionPerformed(evt);
@@ -111,21 +112,17 @@ public class ManterCliente extends javax.swing.JInternalFrame {
             }
         });
 
-        tfTel.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfTelActionPerformed(evt);
-            }
-        });
-
         tfEmail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tfEmailActionPerformed(evt);
             }
         });
 
-        jLabel6.setText("Documento:");
+        jLabel6.setText("Documento:*");
 
-        jLabel8.setText("UF:");
+        jLabel8.setText("UF:*");
+
+        tfUF.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         btInserir.setText("Inserir");
         btInserir.addActionListener(new java.awt.event.ActionListener() {
@@ -162,6 +159,21 @@ public class ManterCliente extends javax.swing.JInternalFrame {
             }
         });
 
+        try {
+            ftDocumento.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        ftDocumento.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        ftDocumento.setText("   .   .   -  ");
+
+        try {
+            ftTel.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) #####-####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        ftTel.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -183,16 +195,16 @@ public class ManterCliente extends javax.swing.JInternalFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGap(18, 18, 18)
-                                .addComponent(tfDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(tfTel)
+                                .addComponent(ftDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(tfNome, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(tfEmail)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(tfEndereco)
+                                .addComponent(ftTel)
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel8)
                                 .addGap(18, 18, 18)
-                                .addComponent(tfUF, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(tfUF, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(tfEndereco)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(17, 17, 17)
                         .addComponent(btAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -214,7 +226,7 @@ public class ManterCliente extends javax.swing.JInternalFrame {
                     .addComponent(jLabel1)
                     .addComponent(tfCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6)
-                    .addComponent(tfDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(ftDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -222,13 +234,13 @@ public class ManterCliente extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(tfEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8)
-                    .addComponent(tfUF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tfUF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ftTel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(tfTel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tfEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
@@ -318,14 +330,6 @@ public class ManterCliente extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_tfCodigoActionPerformed
 
-    private void tfEnderecoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfEnderecoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tfEnderecoActionPerformed
-
-    private void tfTelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfTelActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tfTelActionPerformed
-
     private void tfEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfEmailActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tfEmailActionPerformed
@@ -335,11 +339,11 @@ public class ManterCliente extends javax.swing.JInternalFrame {
          ClienteController clienteController = DaoFactory.criarClienteController();
          Cliente cliente = clienteController.buscarPorId(Integer.parseInt(tfPesquisar.getText()));
          tfCodigo.setText(String.valueOf(cliente.getIdCliente()));
-         tfDocumento.setText(cliente.getDocumento());
+         ftDocumento.setText(cliente.getDocumento());
          tfNome.setText(cliente.getNomeCliente());
          tfEndereco.setText(cliente.getEndereco());
          tfUF.setText(cliente.getUf());
-         tfTel.setText(cliente.getTelefone());
+         ftTel.setText(cliente.getTelefone());
          tfEmail.setText(cliente.getEmail());
          tfPesquisar.requestFocus();
          
@@ -390,11 +394,11 @@ public class ManterCliente extends javax.swing.JInternalFrame {
                 try {
                     ClienteController clienteController = DaoFactory.criarClienteController();
                     Cliente cliente = new Cliente(); 
-                    cliente.setDocumento(tfDocumento.getText());
+                    cliente.setDocumento(ftDocumento.getText());
                     cliente.setNomeCliente(tfNome.getText());
                     cliente.setEndereco(tfEndereco.getText());
                     cliente.setUf(tfUF.getText());
-                    cliente.setTelefone(tfTel.getText());
+                    cliente.setTelefone(ftTel.getText());
                     cliente.setEmail(tfEmail.getText());
                    
                     clienteController.inserir(cliente);
@@ -414,11 +418,11 @@ public class ManterCliente extends javax.swing.JInternalFrame {
                     Cliente cliente = new Cliente();
                     
                     cliente.setIdCliente(Integer.parseInt(tfCodigo.getText()));
-                    cliente.setDocumento(tfDocumento.getText());
+                    cliente.setDocumento(ftDocumento.getText());
                     cliente.setNomeCliente(tfNome.getText());
                     cliente.setEndereco(tfEndereco.getText());
                     cliente.setUf(tfUF.getText());
-                    cliente.setTelefone(tfTel.getText());
+                    cliente.setTelefone(ftTel.getText());
                     cliente.setEmail(tfEmail.getText());
                     
                     clienteController.atualizar(cliente);  
@@ -439,11 +443,11 @@ public class ManterCliente extends javax.swing.JInternalFrame {
                     Cliente cliente = new Cliente();
                     
                     cliente.setIdCliente(Integer.parseInt(tfCodigo.getText()));
-                    cliente.setDocumento(tfDocumento.getText());
+                    cliente.setDocumento(ftDocumento.getText());
                     cliente.setNomeCliente(tfNome.getText());
                     cliente.setEndereco(tfEndereco.getText());
                     cliente.setUf(tfUF.getText());
-                    cliente.setTelefone(tfTel.getText());
+                    cliente.setTelefone(ftTel.getText());
                     cliente.setEmail(tfEmail.getText());
                     
                     clienteController.deletarPorId(cliente.getIdCliente());
@@ -453,11 +457,11 @@ public class ManterCliente extends javax.swing.JInternalFrame {
                     btConfirmar.setEnabled(false);
                    
                     tfCodigo.setText("");
-                    tfDocumento.setText("");
+                    ftDocumento.setText("");
                     tfNome.setText("");
-                    tfEndereco.setText("");
+                    ftTel.setText("");
                     tfUF.setText("");
-                    tfTel.setText("");
+                    tfEndereco.setText("");
                     tfEmail.setText("");
                     tfPesquisar.setText("");
                     tfPesquisar.requestFocus();
@@ -471,11 +475,11 @@ public class ManterCliente extends javax.swing.JInternalFrame {
 
     private void aoClicarInserir(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aoClicarInserir
         tfCodigo.setText("");
-        tfDocumento.setText("");
+        ftDocumento.setText("");
         tfNome.setText("");
-        tfEndereco.setText("");
+        ftTel.setText("");
         tfUF.setText("");
-        tfTel.setText("");
+        tfEndereco.setText("");
         tfEmail.setText("");
         btExcluir.setEnabled(false);
         btAlterar.setEnabled(false);
@@ -483,6 +487,10 @@ public class ManterCliente extends javax.swing.JInternalFrame {
         this.operacao = Operacao.INSERIR;
         tfOperacao.setText(this.operacao.name());
     }//GEN-LAST:event_aoClicarInserir
+
+    private void tfEnderecoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfEnderecoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfEnderecoActionPerformed
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -491,6 +499,8 @@ public class ManterCliente extends javax.swing.JInternalFrame {
     private javax.swing.JButton btExcluir;
     private javax.swing.JButton btInserir;
     private javax.swing.JButton btListar;
+    private javax.swing.JFormattedTextField ftDocumento;
+    private javax.swing.JFormattedTextField ftTel;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -504,13 +514,11 @@ public class ManterCliente extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField tfCodigo;
-    private javax.swing.JTextField tfDocumento;
     private javax.swing.JTextField tfEmail;
     private javax.swing.JTextField tfEndereco;
     private javax.swing.JTextField tfNome;
     private javax.swing.JTextField tfOperacao;
     private javax.swing.JTextField tfPesquisar;
-    private javax.swing.JTextField tfTel;
     private javax.swing.JTextField tfUF;
     // End of variables declaration//GEN-END:variables
 }
