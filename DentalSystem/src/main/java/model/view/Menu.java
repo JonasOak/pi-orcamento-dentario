@@ -1,8 +1,9 @@
 package model.view;
 
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
+import java.net.URL;
+import javax.swing.ImageIcon;
 import javax.swing.JDesktopPane;
+import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -229,6 +230,7 @@ public class Menu extends javax.swing.JFrame {
     private void abrirItemOrcamento(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_abrirItemOrcamento
         ManterItemDoOrcamento tela = new ManterItemDoOrcamento();
         Operacao operacao = Operacao.INATIVO;
+        
         desktop.add(tela);
         tela.setVisible(true);
         tela.getBtExcluir().setEnabled(false);
