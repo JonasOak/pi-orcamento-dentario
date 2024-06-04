@@ -134,7 +134,10 @@ public class Login extends javax.swing.JFrame {
                 Menu menu = new Menu(login);
                 menu.getTfloginAtivo().setText(obterLogin());
                 dispose();
+                menu.centralizar(menu.getDesktop());
                 menu.setVisible(true);
+                menu.getDesktop().revalidate();
+                menu.getDesktop().repaint();
             }
             else {
                 JOptionPane.showMessageDialog(null,"Verifique suas informações e tente novamente","ERRO",JOptionPane.ERROR_MESSAGE);

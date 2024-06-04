@@ -21,7 +21,7 @@ public class Menu extends javax.swing.JFrame {
     public Menu() {
         initComponents();
         setSize(1366, 768);
-        setLocation(350, 50);
+        setLocation(300, 50);
     }
     
     public Menu(String usuarioLogado) {
@@ -36,6 +36,18 @@ public class Menu extends javax.swing.JFrame {
         if (!"admin".equals(usuarioLogado)) {
             barraUsuario.setVisible(false);
         }
+    }
+    
+    public void centralizar(JDesktopPane pane) {
+        int paneWidth = pane.getWidth();
+        int paneHeigh = pane.getHeight();
+        int width = this.getWidth();
+        int height = this.getHeight();
+        
+        int x = (paneWidth - width) / 2;
+        int y = (paneHeigh - height) / 2;
+        
+        this.setLocation(x, y);
     }
 
     public JDesktopPane getDesktop() {
@@ -212,7 +224,10 @@ public class Menu extends javax.swing.JFrame {
         tela.getBtExcluir().setEnabled(false);
         tela.getBtAlterar().setEnabled(false);
         tela.getBtConfirmar().setEnabled(false);
-        tela.getTfOperacao().setText(operacao.name());    
+        tela.getTfOperacao().setText(operacao.name());
+        
+        desktop.revalidate();
+        desktop.repaint();
     }//GEN-LAST:event_abrirCliente
 
     private void abrirOrcamento(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_abrirOrcamento
@@ -225,6 +240,9 @@ public class Menu extends javax.swing.JFrame {
         tela.getBtConfirmar().setEnabled(false);
         tela.getBtValorTotal().setEnabled(false);
         tela.getTfOperacao().setText(operacao.name());
+        
+        desktop.revalidate();
+        desktop.repaint();
     }//GEN-LAST:event_abrirOrcamento
 
     private void abrirItemOrcamento(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_abrirItemOrcamento
@@ -237,6 +255,9 @@ public class Menu extends javax.swing.JFrame {
         tela.getBtAlterar().setEnabled(false);
         tela.getBtConfirmar().setEnabled(false);
         tela.getTfOperacao().setText(operacao.name());
+        
+        desktop.revalidate();
+        desktop.repaint();
     }//GEN-LAST:event_abrirItemOrcamento
 
     private void abrirUsuario(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_abrirUsuario
