@@ -1,9 +1,6 @@
 package model.view;
 
-import java.net.URL;
-import javax.swing.ImageIcon;
 import javax.swing.JDesktopPane;
-import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;

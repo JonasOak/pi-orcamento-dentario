@@ -3,10 +3,8 @@ package model.view;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import model.controller.ClienteController;
 import model.controller.UsuarioController;
 import model.dao.DaoFactory;
-import model.entities.Cliente;
 import model.entities.Usuario;
 import model.entities.enums.Operacao;
 
