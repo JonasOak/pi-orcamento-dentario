@@ -8,8 +8,8 @@ CREATE TABLE IF NOT EXISTS `cliente` (
   `nome` varchar(255) NOT NULL,
   `endereco` varchar(255) NOT NULL,
   `uf` varchar(2) NOT NULL,
-  `telefone` varchar(20) NOT NULL,
-  `documento` varchar(20) NOT NULL,
+  `telefone` varchar(15) NOT NULL,
+  `documento` varchar(14) NOT NULL,
   `email` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id_cliente`)
 );
